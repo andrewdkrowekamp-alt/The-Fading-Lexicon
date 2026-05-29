@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fading Lexicon — English → Greek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e6cf; --card:#fbf5e6; --ink:#2c2218; --ink-soft:#6f6048;
+    --line:#d8c6a0; --line-strong:#b79b66; --honey:#bd7d12; --honey-bg:rgba(189,125,18,.15);
+    --honey-bloom:rgba(189,125,18,.42); --sage:#4f6b3f; --teal:#2f6b78; --oxblood:#8a2b2b;
+    --display:"Fraunces","Iowan Old Style",Georgia,serif;
+    --body:"Spectral","Iowan Old Style",Palatino,Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{
+    font-family:var(--body); color:var(--ink);
+    background:radial-gradient(120% 80% at 12% 0%, #f7eed9 0%, rgba(247,238,217,0) 55%),
+      radial-gradient(120% 90% at 100% 100%, #ecdcba 0%, rgba(236,220,186,0) 50%), var(--paper);
+    background-attachment:fixed; min-height:100vh; line-height:1.55; padding:28px 18px 80px; -webkit-font-smoothing:antialiased;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+  .wrap{position:relative;z-index:1;max-width:880px;margin:0 auto}
+
+  header.masthead{text-align:center;margin-bottom:26px;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--honey);margin-bottom:10px}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,58px);line-height:.98;margin:0;font-variation-settings:"opsz" 120;letter-spacing:-.01em}
+  h1 em{font-style:italic;font-weight:400;color:var(--oxblood)}
+  .sub{font-size:clamp(14px,2.2vw,17px);color:var(--ink-soft);max-width:600px;margin:14px auto 0;font-style:italic}
+
+  .tabs{display:flex;gap:8px;justify-content:center;margin:30px 0 14px;flex-wrap:wrap;animation:rise .7s .08s cubic-bezier(.2,.7,.2,1) both}
+  .tab{font-family:var(--mono);font-size:12px;letter-spacing:.08em;cursor:pointer;border:1.5px solid var(--line-strong);background:transparent;color:var(--ink-soft);padding:9px 15px;border-radius:2px;transition:.22s;white-space:nowrap;text-transform:uppercase}
+  .tab .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+  .tab[data-tier="0"] .dot{background:var(--sage)} .tab[data-tier="1"] .dot{background:var(--teal)} .tab[data-tier="2"] .dot{background:var(--oxblood)}
+  .tab:hover{color:var(--ink);border-color:var(--ink)}
+  .tab.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tab.on .dot{box-shadow:0 0 0 2px var(--paper)}
+
+  .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 18px;animation:rise .7s .1s cubic-bezier(.2,.7,.2,1) both}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;cursor:pointer;border:1px solid var(--line-strong);background:var(--card);color:var(--ink-soft);padding:7px 13px;border-radius:99px;transition:.18s}
+  .chip:hover{border-color:var(--ink);color:var(--ink)}
+  .chip.on{background:var(--honey);border-color:var(--honey);color:#fff}
+
+  .card{background:var(--card);border:1px solid var(--line-strong);box-shadow:0 1px 0 var(--line) inset, 0 18px 50px -28px rgba(60,40,15,.55);border-radius:4px;padding:26px clamp(20px,4vw,42px) 30px;position:relative;animation:rise .7s .14s cubic-bezier(.2,.7,.2,1) both}
+  .card::after{content:"";position:absolute;inset:7px;border:1px solid var(--line);border-radius:2px;pointer-events:none}
+  .cardtop{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;position:relative;z-index:1}
+  .badge{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;padding:5px 10px;border-radius:2px;color:#fff}
+  .badge.a1{background:var(--sage)} .badge.a2{background:var(--teal)} .badge.c1{background:var(--oxblood)}
+  .ttl{font-family:var(--display);font-weight:600;font-size:clamp(22px,3.6vw,30px);margin:8px 0 0;flex:1 1 auto}
+  .meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right;line-height:1.7}
+  .meta b{color:var(--honey);font-weight:600}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);margin:18px 0 20px;position:relative;z-index:1}
+
+  .story{font-size:clamp(18px,2.7vw,21px);line-height:1.95;letter-spacing:.005em;position:relative;z-index:1;min-height:120px}
+  .story .w{transition:color .25s}
+  .story .w.gr{color:var(--honey);font-weight:500;background:var(--honey-bg);border-radius:3px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .story .w.nat{border-bottom:1px dotted var(--line-strong);padding-bottom:1px}
+  .story .w.just{animation:bloom .85s ease both}
+  .story .punct{color:var(--ink)}
+  @keyframes bloom{0%{background:var(--honey-bloom);box-shadow:0 0 0 3px var(--honey-bloom);transform:translateY(-1px) scale(1.05)}60%{transform:translateY(0) scale(1)}100%{background:var(--honey-bg);box-shadow:0 0 0 0 transparent}}
+
+  .status{display:flex;align-items:center;gap:14px;margin:24px 0 12px;position:relative;z-index:1;flex-wrap:wrap}
+  .count{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+  .count b{color:var(--honey)} .count .done{color:var(--sage);font-weight:600}
+  .bar{flex:1 1 180px;height:7px;background:#e7d6b2;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--honey),#e0a23a);transition:width .25s}
+
+  input[type=range]{width:100%;-webkit-appearance:none;appearance:none;background:transparent;margin:6px 0 2px;position:relative;z-index:1}
+  input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--line-strong)}
+  input[type=range]::-moz-range-track{height:2px;background:var(--line-strong)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--card);border:2.5px solid var(--honey);margin-top:-9px;cursor:pointer;box-shadow:0 2px 6px rgba(120,80,10,.4);transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--card);border:2.5px solid var(--honey);cursor:pointer}
+
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+  button.btn{font-family:var(--mono);font-size:12px;letter-spacing:.04em;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:9px 14px;border-radius:2px;transition:.16s}
+  button.btn:hover{background:var(--ink);color:var(--card)}
+  button.btn.ghost{border-color:var(--line-strong);color:var(--ink-soft)}
+  button.btn.ghost:hover{background:var(--honey);border-color:var(--honey);color:#fff}
+  button.btn:disabled{opacity:.35;cursor:default;background:transparent;color:var(--ink)}
+
+  .drawer{margin-top:18px;border-top:1px dashed var(--line-strong);padding-top:16px;position:relative;z-index:1}
+  .drawer[hidden]{display:none}
+  .drawer h4{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--honey);margin:0 0 8px}
+  .natural{font-size:clamp(17px,2.6vw,20px);line-height:1.85;color:var(--ink)}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:8px;line-height:1.7}
+  textarea{width:100%;height:240px;font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink);background:#fffaf0;border:1px solid var(--line-strong);border-radius:3px;padding:12px;resize:vertical}
+
+  footer.note{max-width:880px;margin:26px auto 0;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);line-height:1.8;text-align:center}
+  footer.note b{color:var(--honey)}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @media (max-width:560px){.meta{text-align:left}.cardtop{flex-direction:column;align-items:flex-start}}
+
+  /* --- grammar tooltip --- */
+  .story .w.gr.hasg{cursor:help;touch-action:manipulation}
+  @media (hover:hover){ .story .w.gr.hasg:hover{background:var(--honey);color:#fff} }
+  .tip{position:absolute;z-index:60;max-width:300px;background:#2c2218;color:#f1e6cf;border:1px solid var(--line-strong);border-radius:7px;padding:11px 13px;box-shadow:0 14px 34px -10px rgba(20,12,0,.7);font-family:var(--body);font-size:14px;line-height:1.45;pointer-events:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+  .tip[hidden]{display:none}
+  .tip-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:3px}
+  .tip-l{font-family:var(--display);font-weight:600;font-size:18px;color:#e7b24e}
+  .tip-p{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:#c4ad7e;white-space:nowrap}
+  .tip-g{font-style:italic;color:#f4ecd7;margin-bottom:7px}
+  .tip-here{font-family:var(--mono);font-size:11px;color:#c4ad7e;border-top:1px dotted #6f6048;padding-top:7px}
+  .tip-here b{color:#e7b24e;font-style:normal}
+  .story .snap{border-bottom:1px dotted var(--line-strong);padding-bottom:1px}
+  .tip.pinned{pointer-events:auto}
+  .tip-audio{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:11px}
+  .tip-listen{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:#241606;background:#e7b24e;border:none;padding:7px 11px;border-radius:5px;cursor:pointer}
+  @media (hover:hover){ .tip-listen:hover{background:#f1c674} }
+  .tip-listen.speaking{background:#f1c674;box-shadow:0 0 0 2px rgba(231,178,78,.5)}
+  .tip-say{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:#e7b24e;background:transparent;border:1px solid #6f6048;padding:6px 9px;border-radius:5px;text-decoration:none}
+  @media (hover:hover){ .tip-say:hover{border-color:#e7b24e;color:#f1c674} }
+  .tip-ft{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#c4ad7e;margin-top:7px}
+  .tip ul{margin:4px 0 0;padding:0;list-style:none}
+  .tip li{font-size:13px;padding:1.5px 0;color:#efe6d0}
+  .tip li b{color:#e7b24e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">A Word-by-Word Immersion Primer</div>
+    <h1>The Fading <em>Lexicon</em></h1>
+    <p class="sub">Nine graded stories across three levels. Advance the dial and, one word per step, English dissolves into Greek — every repetition of that word turns together — and once a whole sentence is Greek it snaps into natural Greek syntax.</p>
+  </header>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-tier="0"><span class="dot"></span>A1 · Beginner</button>
+    <button class="tab" data-tier="1"><span class="dot"></span>A2 · Elementary</button>
+    <button class="tab" data-tier="2"><span class="dot"></span>C1 · Advanced</button>
+  </div>
+  <div class="chips" id="chips"></div>
+
+  <div class="card">
+    <div class="cardtop">
+      <div style="flex:1 1 auto">
+        <span class="badge" id="badge">A1</span>
+        <h2 class="ttl" id="title"></h2>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
+    <div class="rule"></div>
+    <div class="story" id="story"></div>
+
+    <div class="status">
+      <div class="count" id="count"></div>
+      <div class="bar"><i id="barfill"></i></div>
+    </div>
+    <input type="range" id="slider" min="0" value="0" step="1">
+
+    <div class="controls">
+      <button class="btn" id="prev">◀ Back one word</button>
+      <button class="btn" id="next">Forward one word ▶</button>
+      <button class="btn ghost" id="all">Make it all Greek</button>
+      <button class="btn ghost" id="reset">Reset to English</button>
+      <button class="btn ghost" id="natbtn">Show natural Greek</button>
+      <button class="btn ghost" id="expbtn">Export every iteration</button>
+    </div>
+
+    <div class="drawer" id="natural" hidden>
+      <h4>How a native speaker would actually write it</h4>
+      <div class="natural" id="naturaltext"></div>
+      <div class="hint">Each step turns one English word <b>and all its repetitions</b> into Greek, in English word order so the swap is a clear vocabulary match. The moment a <b>whole sentence</b> is Greek it snaps into <b>natural Greek syntax</b> — words reorder, articles contract (σε + το → στο), and pronouns drop (a dotted underline marks a reflowed sentence).</div>
+    </div>
+
+    <div class="drawer" id="exportbox" hidden>
+      <h4>All iterations as plain text — <span id="iterlabel"></span></h4>
+      <textarea id="exparea" readonly></textarea>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="copybtn">Copy to clipboard</button>
+        <button class="btn ghost" id="dlbtn">Download .txt</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="note" id="foot"></footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+/* =========================================================================
+   GRAMMAR TOOLTIPS  —  hover (or tap) a Greek word to see its part of speech,
+   meaning, and other forms / conjugations.
+   The dictionary is keyed by the GREEK WORD, accent- and case-folded, so the
+   story data never needs tagging. Register words with def():
+       def("σκύλος σκύλο σκύλοι", {l:"σκύλος", p:"noun · masculine",
+            g:"dog", f:["σκύλος — nom. sg.","σκύλο — acc. sg.","σκύλοι — pl."]});
+   Any number of surface forms can point at one entry. Entries are appended in
+   labelled batches at the GEND sentinel near here — so the file is always a
+   working checkpoint, and a batch can be added/continued at any time.
+   ========================================================================= */
+const _ACC={"ά":"α","έ":"ε","ή":"η","ί":"ι","ό":"ο","ύ":"υ","ώ":"ω","ΐ":"ι","ΰ":"υ","ϊ":"ι","ϋ":"υ"};
+function fold(s){return (s||"").toLowerCase().replace(/./g,c=>_ACC[c]||c).replace(/ς/g,"σ").trim();}
+const GRAMMAR={};
+function def(keys,e){keys.split(/\s+/).forEach(k=>{const fk=fold(k);if(fk)GRAMMAR[fk]=e;});}
+function defp(phrase,e){const fk=fold(phrase);if(fk)GRAMMAR[fk]=e;}
+/* lookup: whole token first; for a multiword token fall back to its head
+   (last word, then first) so phrases like "Το βράδυ" resolve to βράδυ. */
+function look(s){
+  const k=fold(s); if(GRAMMAR[k]) return GRAMMAR[k];
+  if(k.indexOf(" ")>=0){ const p=k.split(" ");
+    if(GRAMMAR[p[p.length-1]]) return GRAMMAR[p[p.length-1]];
+    if(GRAMMAR[p[0]]) return GRAMMAR[p[0]];
+  }
+  return null;
+}
+
+const tip=document.createElement("div"); tip.className="tip"; tip.hidden=true; document.body.appendChild(tip);
+let tipPinned=false;
+/* --- Web Speech (instant in-browser pronunciation) --- speaks Greek with an
+   el-GR voice if the device has one; the Google Translate link is always there
+   too, so users on a device without a Greek voice still have reliable audio. */
+let _voices=[];
+function loadVoices(){ try{ _voices=("speechSynthesis" in window)?window.speechSynthesis.getVoices():[]; }catch(e){ _voices=[]; } }
+function pickGreekVoice(){ if(!_voices.length) loadVoices(); return _voices.find(v=>/^el/i.test(v.lang))||null; }
+function speakGreek(text,btn){
+  if(!text||!("speechSynthesis" in window)||!window.SpeechSynthesisUtterance) return;
+  const synth=window.speechSynthesis;
+  try{ synth.cancel(); }catch(e){}
+  const u=new SpeechSynthesisUtterance(text); u.lang="el-GR"; u.rate=0.9;
+  const v=pickGreekVoice(); if(v) u.voice=v;
+  if(btn){ u.onstart=()=>btn.classList.add("speaking"); u.onend=u.onerror=()=>btn.classList.remove("speaking"); }
+  try{ synth.resume(); }catch(e){}   /* iOS often leaves the engine paused */
+  synth.speak(u);
+}
+if("speechSynthesis" in window){ loadVoices(); try{ window.speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
+function entryHTML(e,surface){
+  const ftl=/verb/.test(e.p)?"conjugations":"other forms";
+  let h='<div class="tip-h"><span class="tip-l">'+e.l+'</span><span class="tip-p">'+e.p+'</span></div>';
+  h+='<div class="tip-g">'+e.g+'</div>';
+  if(surface)h+='<div class="tip-here">in the text: <b>'+surface+'</b></div>';
+  if(e.f&&e.f.length){
+    h+='<span class="tip-ft">'+ftl+'</span><ul>'+
+       e.f.map(x=>{const i=x.indexOf("—");return "<li>"+(i>=0?("<b>"+x.slice(0,i).trim()+"</b> — "+x.slice(i+1).trim()):x)+"</li>";}).join("")+"</ul>";
+  }
+  const _w=(surface||e.l);
+  const _attr=_w.replace(/&/g,"&amp;").replace(/"/g,"&quot;");
+  const _canSpeak=("speechSynthesis" in window);
+  h+='<div class="tip-audio">';
+  if(_canSpeak) h+='<button type="button" class="tip-listen" data-say="'+_attr+'">\uD83D\uDD0A  Say it</button>';
+  h+='<a class="tip-say" href="https://translate.google.com/?sl=el&tl=en&op=translate&text='+encodeURIComponent(_w)+'" target="_blank" rel="noopener">Google Translate \u2197</a>';
+  h+='</div>';
+  return h;
+}
+function showTip(target){
+  const e=look(target.textContent);
+  if(!e){hideTip();return;}
+  tip.innerHTML=entryHTML(e,target.textContent.trim());
+  tip.style.left="0px"; tip.style.top="-9999px"; tip.hidden=false;
+  const r=target.getBoundingClientRect(), tr=tip.getBoundingClientRect();
+  let top=r.top+window.scrollY-tr.height-10;
+  if(top<window.scrollY+4) top=r.bottom+window.scrollY+10;
+  let left=r.left+window.scrollX+r.width/2-tr.width/2;
+  const vw=document.documentElement.clientWidth;
+  left=Math.max(window.scrollX+8, Math.min(left, window.scrollX+vw-tr.width-8));
+  tip.style.top=top+"px"; tip.style.left=left+"px";
+}
+function hideTip(){ if(!tipPinned) tip.hidden=true; }
+(function wireTips(){
+  const el=$("story");
+  const CAN_HOVER=!!(window.matchMedia&&window.matchMedia("(hover: hover)").matches);
+  let lastTouch=0, tStart=null, curWord=null;
+  function unpin(){tipPinned=false;tip.hidden=true;tip.classList.remove("pinned");curWord=null;}
+  function pinWord(t){ showTip(t); tipPinned=true; tip.classList.add("pinned"); curWord=t; }
+  /* hover preview — mouse/trackpad devices only (avoids iOS first-tap-as-hover) */
+  if(CAN_HOVER){
+    el.addEventListener("mouseover",ev=>{const t=ev.target.closest&&ev.target.closest(".w.gr:not(.nat)");if(t){tipPinned=false;tip.classList.remove("pinned");showTip(t);}});
+    el.addEventListener("mouseout",ev=>{const t=ev.target.closest&&ev.target.closest(".w.gr:not(.nat)");if(t)hideTip();});
+  }
+  /* touch — a tap on a word opens + pins its card so its buttons become tappable */
+  el.addEventListener("touchstart",ev=>{const c=ev.touches&&ev.touches[0];tStart=c?{x:c.clientX,y:c.clientY}:null;},{passive:true});
+  el.addEventListener("touchend",ev=>{
+    const t=ev.target.closest&&ev.target.closest(".w.gr:not(.nat)"); if(!t)return;
+    const c=ev.changedTouches&&ev.changedTouches[0];
+    if(tStart&&c&&(Math.abs(c.clientX-tStart.x)>10||Math.abs(c.clientY-tStart.y)>10))return; /* was a scroll, not a tap */
+    lastTouch=Date.now(); ev.preventDefault();      /* block text-selection + the synthesized click */
+    if(!tip.hidden&&tipPinned&&curWord===t){ unpin(); } else { pinWord(t); }
+  },{passive:false});
+  /* mouse click — with a guard so the synthesized post-touch click can't undo the tap */
+  el.addEventListener("click",ev=>{const t=ev.target.closest&&ev.target.closest(".w.gr:not(.nat)");if(t){ev.stopPropagation();if(Date.now()-lastTouch<700)return;if(tip.hidden||!tipPinned||curWord!==t){pinWord(t);}else{unpin();}}});
+  /* taps inside the card run the speaker; keep the card open */
+  tip.addEventListener("click",ev=>{const b=ev.target.closest&&ev.target.closest(".tip-listen");if(b)speakGreek(b.getAttribute("data-say")||"",b);ev.stopPropagation();});
+  document.addEventListener("click",unpin);
+  document.addEventListener("keydown",ev=>{if(ev.key==="Escape")unpin();});
+  window.addEventListener("scroll",()=>{if(!tipPinned)tip.hidden=true;},{passive:true});
+})();
+
+/* === grammar entries: batches appended below this sentinel === */
+/* B1 — articles, indefinite articles, prepositions, conjunctions, particles */
+def("ο η το τον τη την τα οι των",{l:"ο / η / το",p:"article · definite",g:"the — agrees in gender, number and case",f:["ο / η / το — nom. sg. (m / f / n)","τον / τη(ν) / το — acc. sg.","οι / οι / τα — nom. pl.","των — gen. pl."]});
+def("στο στη στην στον στα στις",{l:"στο / στη(ν)",p:"preposition + article",g:"in / to / at the — σε merged with the article",f:["σε + το → στο","σε + τη(ν) → στη(ν)","σε + τα → στα","σε + τον → στον"]});
+def("ένας ένα έναν μια μία μιας",{l:"ένας / μία / ένα",p:"article · indefinite",g:"a, an (also the numeral 'one')",f:["ένας / μία / ένα — nom. (m / f / n)","έναν / μία / ένα — acc.","μιας — gen. fem."]});
+def("σε",{l:"σε",p:"preposition",g:"in, on, at, to (+ accusative); merges with the article → στο, στη",f:["σε + article → στο / στη(ν) / στα"]});
+def("με",{l:"με",p:"preposition",g:"with; also 'by' (a means)",f:["με το τρένο — by train","με προσοχή — with care"]});
+def("από",{l:"από",p:"preposition",g:"from; of; than",f:["από το ποτάμι — from the river"]});
+def("δίπλα",{l:"δίπλα",p:"adverb / preposition",g:"next to, beside",f:["δίπλα στη θάλασσα — beside the sea"]});
+def("κοντά",{l:"κοντά",p:"adverb / preposition",g:"near, close",f:["κοντά στο σπίτι — near the house"]});
+def("πάνω",{l:"πάνω",p:"adverb / preposition",g:"on, above, up",f:["πάνω στο τραπέζι — on the table"]});
+def("μέσα από",{l:"μέσα από",p:"preposition (phrase)",g:"through",f:["μέσα από τους δρόμους — through the streets"]});
+def("για",{l:"για",p:"preposition",g:"for, about, toward",f:["για την πόλη — for / to the city"]});
+def("και",{l:"και",p:"conjunction",g:"and; also, too",f:["… και … — … and …"]});
+def("αλλά",{l:"αλλά",p:"conjunction",g:"but"});
+def("όμως",{l:"όμως",p:"conjunction / adverb",g:"but, however, yet"});
+def("επειδή",{l:"επειδή",p:"conjunction",g:"because"});
+def("ότι",{l:"ότι",p:"conjunction",g:"that — introduces a clause"});
+def("να",{l:"να",p:"particle",g:"to / that — marks the subjunctive",f:["θέλει να παίξει — wants to play"]});
+/* B2 — pronouns, adverbs, numerals, interjections */
+def("αυτός εκείνος",{l:"αυτός / εκείνος",p:"pronoun · personal",g:"he / that one — usually dropped; the verb ending shows the person",f:["αυτός — he","εκείνος — he, that one","αυτή — she","αυτοί — they (m)"]});
+def("αυτή",{l:"αυτή",p:"pronoun · personal",g:"she — usually dropped in Greek",f:["αυτή — she (nom.)","αυτήν / την — her (acc.)"]});
+def("αυτήν",{l:"αυτήν",p:"pronoun · personal",g:"her (emphatic accusative)",f:["αυτή — nom.","αυτήν — acc."]});
+def("αυτοί αυτές",{l:"αυτοί / αυτές",p:"pronoun · personal",g:"they (masc. / fem.) — usually dropped",f:["αυτοί — they (m)","αυτές — they (f)","αυτά — they (n)"]});
+def("αυτά",{l:"αυτά",p:"pronoun / determiner",g:"they, these (neuter)"});
+def("αυτό",{l:"αυτό",p:"pronoun · neuter",g:"it, this"});
+def("κάτι",{l:"κάτι",p:"pronoun",g:"something"});
+def("μετά",{l:"μετά",p:"adverb",g:"then, after, afterwards"});
+def("έπειτα",{l:"έπειτα",p:"adverb",g:"then, afterwards"});
+def("πολύ",{l:"πολύ",p:"adverb",g:"very; much, a lot"});
+def("επίσης",{l:"επίσης",p:"adverb",g:"also, too"});
+def("μακριά",{l:"μακριά",p:"adverb",g:"far, away"});
+def("τώρα",{l:"τώρα",p:"adverb",g:"now"});
+def("χθες",{l:"χθες",p:"adverb",g:"yesterday"});
+def("κάθε",{l:"κάθε",p:"determiner",g:"each, every — does not inflect"});
+def("γρήγορα",{l:"γρήγορα",p:"adverb",g:"quickly, fast",f:["adj.: γρήγορος / -η / -ο"]});
+def("καλά",{l:"καλά",p:"adverb",g:"well",f:["adj.: καλός / -ή / -ό — good"]});
+def("πίσω",{l:"πίσω",p:"adverb",g:"back, behind"});
+def("σκληρά",{l:"σκληρά",p:"adverb",g:"hard, harshly",f:["adj.: σκληρός — hard"]});
+def("πάντα",{l:"πάντα",p:"adverb",g:"always"});
+def("σταδιακά",{l:"σταδιακά",p:"adverb",g:"gradually"});
+def("απαλά",{l:"απαλά",p:"adverb",g:"gently, softly"});
+def("αργά",{l:"αργά",p:"adverb",g:"slowly; late"});
+def("πια",{l:"πια",p:"adverb",g:"any more, no longer — paired with δεν"});
+def("κάποτε",{l:"κάποτε",p:"adverb",g:"once, at one time"});
+def("ακόμη",{l:"ακόμη",p:"adverb",g:"still, even, yet",f:["ακόμη πιο — even more"]});
+def("πιο",{l:"πιο",p:"adverb",g:"more — forms the comparative",f:["πιο ύπουλη — more treacherous"]});
+def("μόνο",{l:"μόνο",p:"adverb",g:"only, just"});
+def("μόνη",{l:"μόνη",p:"adjective / adverb",g:"alone (fem.)",f:["μόνος / μόνη / μόνο"]});
+def("περήφανα",{l:"περήφανα",p:"adverb",g:"proudly",f:["adj.: περήφανος — proud"]});
+def("τελικά",{l:"τελικά",p:"adverb",g:"finally, in the end"});
+def("μερικές φορές",{l:"μερικές φορές",p:"adverb (phrase)",g:"sometimes"});
+def("δύο",{l:"δύο",p:"numeral",g:"two — does not inflect"});
+def("τρία",{l:"τρία",p:"numeral",g:"three (neuter)",f:["τρεις (m/f) / τρία (n)"]});
+def("τρεις",{l:"τρεις",p:"numeral",g:"three (masc./fem.)",f:["τρεις (m/f) / τρία (n)"]});
+def("τέσσερα",{l:"τέσσερα",p:"numeral",g:"four (neuter)",f:["τέσσερις (m/f) / τέσσερα (n)"]});
+def("πρώτο πρώτος πρώτη",{l:"πρώτος",p:"adjective · ordinal",g:"first",f:["πρώτος / πρώτη / πρώτο"]});
+def("καληνύχτα",{l:"καληνύχτα",p:"interjection",g:"good night",f:["καλή + νύχτα → καληνύχτα"]});
+def("αντίο",{l:"αντίο",p:"interjection",g:"goodbye"});
+/* B3 — nouns (A1 + early A2) */
+def("σκύλος σκύλο σκύλοι",{l:"σκύλος",p:"noun · masculine",g:"dog",f:["σκύλος — nom. sg.","σκύλο — acc. sg.","σκύλου — gen. sg.","σκύλοι — nom. pl."]});
+def("όνομα ονόματα",{l:"όνομα",p:"noun · neuter",g:"name",f:["όνομα — sg.","ονόματα — pl.","το όνομά του — his name"]});
+def("φαγητό φαγητά",{l:"φαγητό",p:"noun · neuter",g:"food",f:["φαγητό — sg.","φαγητά — pl."]});
+def("νερό νερά",{l:"νερό",p:"noun · neuter",g:"water",f:["νερό — sg.","νερά — pl."]});
+def("πάρκο πάρκα",{l:"πάρκο",p:"noun · neuter",g:"park",f:["πάρκο — sg.","πάρκα — pl."]});
+def("σπίτι σπίτια",{l:"σπίτι",p:"noun · neuter",g:"house, home",f:["σπίτι — sg.","σπίτια — pl.","στο σπίτι — at home"]});
+def("μπάλα μπάλες",{l:"μπάλα",p:"noun · feminine",g:"ball",f:["μπάλα — sg.","μπάλες — pl."]});
+def("γάτα γάτες",{l:"γάτα",p:"noun · feminine",g:"cat",f:["γάτα — sg.","γάτες — pl."]});
+def("βιβλίο βιβλία",{l:"βιβλίο",p:"noun · neuter",g:"book",f:["βιβλίο — sg.","βιβλία — pl."]});
+def("βράδυ βράδια",{l:"βράδυ",p:"noun · neuter",g:"evening",f:["βράδυ — sg.","το βράδυ — in the evening / at night"]});
+def("νύχτα νύχτες",{l:"νύχτα",p:"noun · feminine",g:"night",f:["νύχτα — sg.","νύχτες — pl."]});
+def("κορίτσι κορίτσια",{l:"κορίτσι",p:"noun · neuter",g:"girl",f:["κορίτσι — sg.","κορίτσια — pl."]});
+def("κουζίνα κουζίνες",{l:"κουζίνα",p:"noun · feminine",g:"kitchen",f:["κουζίνα — sg.","στην κουζίνα — in the kitchen"]});
+def("τραπέζι τραπέζια",{l:"τραπέζι",p:"noun · neuter",g:"table",f:["τραπέζι — sg.","τραπέζια — pl."]});
+def("μήλο μήλα",{l:"μήλο",p:"noun · neuter",g:"apple",f:["μήλο — sg.","μήλα — pl."]});
+def("γάλα",{l:"γάλα",p:"noun · neuter",g:"milk",f:["γάλα — sg.","γάλατα — pl."]});
+def("μητέρα μητέρες",{l:"μητέρα",p:"noun · feminine",g:"mother",f:["μητέρα — sg.","η μητέρα της — her mother"]});
+def("ψωμί ψωμιά",{l:"ψωμί",p:"noun · neuter",g:"bread",f:["ψωμί — sg.","ψωμιά — pl."]});
+def("τυρί τυριά",{l:"τυρί",p:"noun · neuter",g:"cheese",f:["τυρί — sg.","τυριά — pl."]});
+def("πιάτα πιάτο",{l:"πιάτο",p:"noun · neuter",g:"plate, dish",f:["πιάτο — sg.","πιάτα — pl."]});
+def("σχολείο σχολεία",{l:"σχολείο",p:"noun · neuter",g:"school",f:["σχολείο — sg.","στο σχολείο — at school"]});
+def("δασκάλα δασκάλες",{l:"δασκάλα",p:"noun · feminine",g:"teacher (female)",f:["δασκάλα — fem.","δάσκαλος — masc.","δασκάλες — pl."]});
+def("στυλό",{l:"στυλό",p:"noun · neuter",g:"pen — does not inflect",f:["στυλό — sg. & pl."]});
+def("λέξεις λέξη",{l:"λέξη",p:"noun · feminine",g:"word",f:["λέξη — sg.","λέξεις — pl."]});
+def("παιδιά παιδί",{l:"παιδί",p:"noun · neuter",g:"child",f:["παιδί — sg.","παιδιά — pl."]});
+def("ήλιο ήλιος",{l:"ήλιος",p:"noun · masculine",g:"sun",f:["ήλιος — nom.","ήλιο — acc."]});
+def("τραγούδι τραγούδια",{l:"τραγούδι",p:"noun · neuter",g:"song",f:["τραγούδι — sg.","τραγούδια — pl."]});
+def("καλοκαίρι καλοκαίρια",{l:"καλοκαίρι",p:"noun · neuter",g:"summer",f:["καλοκαίρι — sg.","το καλοκαίρι — in summer"]});
+def("θάλασσα θάλασσες",{l:"θάλασσα",p:"noun · feminine",g:"sea",f:["θάλασσα — sg.","θάλασσες — pl."]});
+def("πόλη πόλεις",{l:"πόλη",p:"noun · feminine",g:"town, city",f:["πόλη — sg.","πόλεις — pl."]});
+def("ταξίδι ταξίδια",{l:"ταξίδι",p:"noun · neuter",g:"trip, journey",f:["ταξίδι — sg.","ταξίδια — pl."]});
+def("τρένο τρένα",{l:"τρένο",p:"noun · neuter",g:"train",f:["τρένο — sg.","τρένα — pl."]});
+def("εισιτήριο εισιτήρια",{l:"εισιτήριο",p:"noun · neuter",g:"ticket",f:["εισιτήριο — sg.","εισιτήρια — pl."]});
+def("καιρός καιρό",{l:"καιρός",p:"noun · masculine",g:"weather; time",f:["καιρός — nom.","καιρό — acc."]});
+def("ξενοδοχείο ξενοδοχεία",{l:"ξενοδοχείο",p:"noun · neuter",g:"hotel",f:["ξενοδοχείο — sg.","ξενοδοχεία — pl."]});
+def("παραλία παραλίες",{l:"παραλία",p:"noun · feminine",g:"beach",f:["παραλία — sg.","παραλίες — pl."]});
+def("δωμάτιο δωμάτια",{l:"δωμάτιο",p:"noun · neuter",g:"room",f:["δωμάτιο — sg.","δωμάτια — pl."]});
+def("παράθυρο παράθυρα",{l:"παράθυρο",p:"noun · neuter",g:"window",f:["παράθυρο — sg.","παράθυρα — pl."]});
+def("καφές καφέ",{l:"καφές",p:"noun · masculine",g:"coffee (also 'café')",f:["καφές — nom.","καφέ — acc.; also 'café' (place)"]});
+def("φρούτα φρούτο",{l:"φρούτο",p:"noun · neuter",g:"fruit",f:["φρούτο — sg.","φρούτα — pl."]});
+def("αγορά αγορές",{l:"αγορά",p:"noun · feminine",g:"market",f:["αγορά — sg.","αγορές — pl."]});
+def("καπέλο καπέλα",{l:"καπέλο",p:"noun · neuter",g:"hat",f:["καπέλο — sg.","καπέλα — pl."]});
+def("ηλιοβασίλεμα",{l:"ηλιοβασίλεμα",p:"noun · neuter",g:"sunset"});
+def("λόφο λόφος",{l:"λόφος",p:"noun · masculine",g:"hill",f:["λόφος — nom.","λόφο — acc."]});
+def("ουρανός ουρανό",{l:"ουρανός",p:"noun · masculine",g:"sky",f:["ουρανός — nom.","ουρανό — acc."]});
+def("εβδομάδα εβδομάδες",{l:"εβδομάδα",p:"noun · feminine",g:"week",f:["εβδομάδα — sg.","εβδομάδες — pl."]});
+def("δρόμους δρόμος δρόμο",{l:"δρόμος",p:"noun · masculine",g:"street, road",f:["δρόμος — nom. sg.","δρόμο — acc. sg.","δρόμους — acc. pl."]});
+/* B4 — nouns (A2 mountains & job, time words) */
+def("πρωί",{l:"πρωί",p:"noun · neuter",g:"morning",f:["πρωί — sg.","το πρωί — in the morning"]});
+def("μέρα μέρες",{l:"μέρα",p:"noun · feminine",g:"day",f:["μέρα — sg.","μέρες — pl.","κάθε μέρα — every day"]});
+def("απόγευμα απογεύματα",{l:"απόγευμα",p:"noun · neuter",g:"afternoon",f:["απόγευμα — sg.","το απόγευμα — in the afternoon"]});
+def("σαββατοκύριακο",{l:"σαββατοκύριακο",p:"noun · neuter",g:"weekend"});
+def("βουνά βουνό",{l:"βουνό",p:"noun · neuter",g:"mountain",f:["βουνό — sg.","βουνά — pl."]});
+def("σακίδια σακίδιο",{l:"σακίδιο",p:"noun · neuter",g:"backpack",f:["σακίδιο — sg.","σακίδια — pl."]});
+def("μονοπάτι μονοπάτια",{l:"μονοπάτι",p:"noun · neuter",g:"path, trail",f:["μονοπάτι — sg.","μονοπάτια — pl."]});
+def("δάσος δάση",{l:"δάσος",p:"noun · neuter",g:"forest",f:["δάσος — sg.","δάση — pl."]});
+def("δέντρα δέντρο",{l:"δέντρο",p:"noun · neuter",g:"tree",f:["δέντρο — sg.","δέντρα — pl."]});
+def("ποτάμι ποτάμια",{l:"ποτάμι",p:"noun · neuter",g:"river",f:["ποτάμι — sg.","ποτάμια — pl."]});
+def("σκηνή σκηνές",{l:"σκηνή",p:"noun · feminine",g:"tent; also stage, scene",f:["σκηνή — sg.","σκηνές — pl."]});
+def("φωτιά φωτιές",{l:"φωτιά",p:"noun · feminine",g:"fire",f:["φωτιά — sg.","φωτιές — pl."]});
+def("αστέρια αστέρι",{l:"αστέρι",p:"noun · neuter",g:"star",f:["αστέρι — sg.","αστέρια — pl."]});
+def("μήνα μήνας μήνες",{l:"μήνας",p:"noun · masculine",g:"month",f:["μήνας — nom.","μήνα — acc.","μήνες — pl."]});
+def("δουλειά δουλειές",{l:"δουλειά",p:"noun · feminine",g:"job, work",f:["δουλειά — sg.","δουλειές — pl."]});
+def("γραφείο γραφεία",{l:"γραφείο",p:"noun · neuter",g:"office; desk",f:["γραφείο — sg.","γραφεία — pl."]});
+def("κτίριο κτίρια",{l:"κτίριο",p:"noun · neuter",g:"building",f:["κτίριο — sg.","κτίρια — pl."]});
+def("λεωφορείο λεωφορεία",{l:"λεωφορείο",p:"noun · neuter",g:"bus",f:["λεωφορείο — sg.","λεωφορεία — pl."]});
+def("υπολογιστή υπολογιστής",{l:"υπολογιστής",p:"noun · masculine",g:"computer",f:["υπολογιστής — nom.","υπολογιστή — acc."]});
+def("μέιλ",{l:"μέιλ",p:"noun · neuter",g:"email — does not inflect",f:["μέιλ — sg. & pl."]});
+def("συνάδελφοι συνάδελφος συναδέλφους",{l:"συνάδελφος",p:"noun · masc./fem.",g:"colleague",f:["συνάδελφος — sg.","συνάδελφοι — pl.","οι συνάδελφοί του — his colleagues"]});
+def("συνάντηση συναντήσεις",{l:"συνάντηση",p:"noun · feminine",g:"meeting",f:["συνάντηση — sg.","συναντήσεις — pl."]});
+def("σχέδιο σχέδια",{l:"σχέδιο",p:"noun · neuter",g:"plan; design",f:["σχέδιο — sg.","σχέδια — pl."]});
+def("αφεντικό αφεντικά",{l:"αφεντικό",p:"noun · neuter",g:"boss",f:["αφεντικό — sg.","το αφεντικό του — his boss"]});
+def("λεφτά",{l:"λεφτά",p:"noun · neuter pl.",g:"money",f:["λεφτά — money (always pl.)","also: χρήματα"]});
+def("προσοχή",{l:"προσοχή",p:"noun · feminine",g:"attention, care",f:["με προσοχή — with care"]});
+/* B5 — C1 nouns (The Lighthouse Keeper) */
+def("φύλακας φύλακες",{l:"φύλακας",p:"noun · masculine",g:"keeper, guard",f:["φύλακας — sg.","φύλακες — pl."]});
+def("καταιγίδα καταιγίδες",{l:"καταιγίδα",p:"noun · feminine",g:"storm",f:["καταιγίδα — sg.","καταιγίδες — pl."]});
+def("ωκεανού ωκεανός ωκεανό",{l:"ωκεανός",p:"noun · masculine",g:"ocean",f:["ωκεανός — nom.","ωκεανό — acc.","ωκεανού — gen. (of the ocean)"]});
+def("ιδιοσυγκρασία",{l:"ιδιοσυγκρασία",p:"noun · feminine",g:"temperament, disposition"});
+def("αγριότητα",{l:"αγριότητα",p:"noun · feminine",g:"ferocity, wildness",f:["η αγριότητά του — its ferocity"]});
+def("θύελλα θύελλες",{l:"θύελλα",p:"noun · feminine",g:"tempest, gale",f:["θύελλα — sg.","θύελλες — pl."]});
+def("κεφάλαιο κεφάλαια",{l:"κεφάλαιο",p:"noun · neuter",g:"chapter; capital (finance)",f:["κεφάλαιο — sg.","κεφάλαια — pl."]});
+def("διαπραγμάτευση διαπραγματεύσεις",{l:"διαπραγμάτευση",p:"noun · feminine",g:"negotiation"});
+def("ανθεκτικότητα",{l:"ανθεκτικότητα",p:"noun · feminine",g:"resilience, endurance"});
+def("απουσία απουσίες",{l:"απουσία",p:"noun · feminine",g:"absence"});
+def("φόβος φόβο φόβου",{l:"φόβος",p:"noun · masculine",g:"fear",f:["φόβος — nom.","φόβο — acc.","φόβου — gen. (of fear)"]});
+def("άρνηση αρνήσεις",{l:"άρνηση",p:"noun · feminine",g:"refusal, denial"});
+def("σύντροφος συντρόφους σύντροφοι",{l:"σύντροφος",p:"noun · masculine",g:"companion, comrade",f:["σύντροφος — nom. sg.","συντρόφους — acc. pl.","σύντροφοι — nom. pl."]});
+def("αυγή",{l:"αυγή",p:"noun · feminine",g:"dawn",f:["η αυγή — the dawn"]});
+def("κύματα κύμα",{l:"κύμα",p:"noun · neuter",g:"wave",f:["κύμα — sg.","κύματα — pl."]});
+def("βράχους βράχος βράχο",{l:"βράχος",p:"noun · masculine",g:"rock",f:["βράχος — nom. sg.","βράχο — acc. sg.","βράχους — acc. pl."]});
+def("ορίζοντα ορίζοντας",{l:"ορίζοντας",p:"noun · masculine",g:"horizon",f:["ορίζοντας — nom.","ορίζοντα — acc."]});
+def("ικανοποίηση",{l:"ικανοποίηση",p:"noun · feminine",g:"satisfaction"});
+def("μοναχικότητα",{l:"μοναχικότητα",p:"noun · feminine",g:"solitude — vs μοναξιά (loneliness)"});
+def("μοναξιά",{l:"μοναξιά",p:"noun · feminine",g:"loneliness"});
+def("πίπα πίπες",{l:"πίπα",p:"noun · feminine",g:"pipe (for smoking)",f:["πίπα — sg.","η πίπα του — his pipe"]});
+def("θνητότητα",{l:"θνητότητα",p:"noun · feminine",g:"mortality",f:["η θνητότητά του — his mortality"]});
+def("θάνατος θάνατο",{l:"θάνατος",p:"noun · masculine",g:"death",f:["θάνατος — nom.","θάνατο — acc."]});
+def("τραγωδία τραγωδίες",{l:"τραγωδία",p:"noun · feminine",g:"tragedy"});
+def("θρίαμβος θρίαμβο",{l:"θρίαμβος",p:"noun · masculine",g:"triumph",f:["θρίαμβος — nom.","θρίαμβο — acc."]});
+def("στίξη",{l:"στίξη",p:"noun · feminine",g:"punctuation"});
+def("ζωή ζωής ζωές",{l:"ζωή",p:"noun · feminine",g:"life",f:["ζωή — nom.","ζωής — gen. (of life)","ζωές — pl."]});
+/* B6 — C1 nouns (The Art Forger, The Mountaineer's Resolve) */
+def("πλαστογράφος πλαστογράφο",{l:"πλαστογράφος",p:"noun · masculine",g:"forger",f:["πλαστογράφος — nom.","πλαστογράφο — acc."]});
+def("ειδικός ειδικό ειδικοί",{l:"ειδικός",p:"noun / adjective",g:"expert; specialist",f:["ειδικός — nom.","ειδικό — acc.","ειδικοί — pl."]});
+def("χρόνια χρόνος χρόνο",{l:"χρόνος",p:"noun · masculine",g:"year; time",f:["χρόνος — sg.","χρόνια — pl. (years)","επί χρόνια — for years"]});
+def("αντίγραφα αντίγραφο",{l:"αντίγραφο",p:"noun · neuter",g:"copy",f:["αντίγραφο — sg.","αντίγραφα — pl."]});
+def("πινελιά πινελιές",{l:"πινελιά",p:"noun · feminine",g:"brushstroke",f:["πινελιά — sg.","πινελιές — pl."]});
+def("στιλ",{l:"στιλ",p:"noun · neuter",g:"style — does not inflect"});
+def("μουσείο μουσεία",{l:"μουσείο",p:"noun · neuter",g:"museum",f:["μουσείο — sg.","μουσεία — pl."]});
+def("πλαστογραφίες πλαστογραφία",{l:"πλαστογραφία",p:"noun · feminine",g:"forgery",f:["πλαστογραφία — sg.","πλαστογραφίες — pl."]});
+def("αλήθεια",{l:"αλήθεια",p:"noun · feminine",g:"truth"});
+def("καμβά καμβάς",{l:"καμβάς",p:"noun · masculine",g:"canvas",f:["καμβάς — nom.","καμβά — acc."]});
+def("χρώματα χρώμα",{l:"χρώμα",p:"noun · neuter",g:"colour",f:["χρώμα — sg.","χρώματα — pl."]});
+def("πίνακα πίνακας",{l:"πίνακας",p:"noun · masculine",g:"painting; board",f:["πίνακας — nom.","πίνακα — acc."]});
+def("υποψία υποψίες",{l:"υποψία",p:"noun · feminine",g:"suspicion",f:["υποψία — sg.","η υποψία της — her suspicion"]});
+def("λεπτομέρεια λεπτομέρειες",{l:"λεπτομέρεια",p:"noun · feminine",g:"detail",f:["λεπτομέρεια — sg.","λεπτομέρειες — pl."]});
+def("έγκλημα εγκλήματα",{l:"έγκλημα",p:"noun · neuter",g:"crime",f:["έγκλημα — sg.","το έγκλημά του — his crime"]});
+def("κόσμο κόσμος",{l:"κόσμος",p:"noun · masculine",g:"world; people",f:["κόσμος — nom.","κόσμο — acc."]});
+def("ταλέντο ταλέντα",{l:"ταλέντο",p:"noun · neuter",g:"talent",f:["ταλέντο — sg.","το ταλέντο του — his talent"]});
+def("έργα έργο",{l:"έργο",p:"noun · neuter",g:"work, piece; play / film",f:["έργο — sg.","έργα — pl."]});
+def("ορειβάτης ορειβάτη",{l:"ορειβάτης",p:"noun · masculine",g:"mountaineer, climber",f:["ορειβάτης — nom.","ορειβάτη — acc."]});
+def("κορυφή κορυφές",{l:"κορυφή",p:"noun · feminine",g:"summit, peak",f:["κορυφή — sg.","κορυφές — pl."]});
+def("υψόμετρο",{l:"υψόμετρο",p:"noun · neuter",g:"altitude"});
+def("αέρας αέρα",{l:"αέρας",p:"noun · masculine",g:"air; wind",f:["αέρας — nom.","αέρα — acc."]});
+def("χιονοθύελλα χιονοθύελλες",{l:"χιονοθύελλα",p:"noun · feminine",g:"blizzard, snowstorm"});
+def("πλαγιά πλαγιές",{l:"πλαγιά",p:"noun · feminine",g:"slope, hillside"});
+def("δάχτυλα δάχτυλο",{l:"δάχτυλο",p:"noun · neuter",g:"finger; toe",f:["δάχτυλο — sg.","δάχτυλα — pl.","τα δάχτυλά του — his fingers"]});
+def("κρυοπαγήματα",{l:"κρυοπαγήματα",p:"noun · neuter pl.",g:"frostbite"});
+def("επιμονή",{l:"επιμονή",p:"noun · feminine",g:"perseverance, persistence"});
+def("βήμα βήματα",{l:"βήμα",p:"noun · neuter",g:"step",f:["βήμα — sg.","βήματα — pl."]});
+def("προσπάθεια προσπάθειες",{l:"προσπάθεια",p:"noun · feminine",g:"effort, attempt"});
+def("στιγμή στιγμές",{l:"στιγμή",p:"noun · feminine",g:"moment",f:["στιγμή — sg.","στιγμές — pl."]});
+def("νίκη νίκες",{l:"νίκη",p:"noun · feminine",g:"victory"});
+def("κατάβαση",{l:"κατάβαση",p:"noun · feminine",g:"descent"});
+/* B7a — adjectives (1/2) */
+def("μεγάλος μεγάλη μεγάλο",{l:"μεγάλος",p:"adjective",g:"big, large; long",f:["μεγάλος / μεγάλη / μεγάλο (m / f / n)"]});
+def("μαύρος μαύρη μαύρο",{l:"μαύρος",p:"adjective",g:"black",f:["μαύρος / μαύρη / μαύρο"]});
+def("καλός καλή καλό",{l:"καλός",p:"adjective",g:"good; nice; kind",f:["καλός / καλή / καλό","adv.: καλά — well"]});
+def("κόκκινος κόκκινη κόκκινο",{l:"κόκκινος",p:"adjective",g:"red",f:["κόκκινος / κόκκινη / κόκκινο"]});
+def("μικρός μικρή μικρό",{l:"μικρός",p:"adjective",g:"small, little",f:["μικρός / μικρή / μικρό"]});
+def("λευκή λευκός λευκό",{l:"λευκός",p:"adjective",g:"white",f:["λευκός / λευκή / λευκό","also: άσπρος"]});
+def("χαρούμενος χαρούμενη χαρούμενο χαρούμενοι",{l:"χαρούμενος",p:"adjective",g:"happy, cheerful",f:["χαρούμενος / -η / -ο","χαρούμενοι — m. pl."]});
+def("πεινασμένος πεινασμένη πεινασμένο",{l:"πεινασμένος",p:"adjective",g:"hungry",f:["πεινασμένος / -η / -ο"]});
+def("γλυκός γλυκιά γλυκό",{l:"γλυκός",p:"adjective",g:"sweet",f:["γλυκός / γλυκιά / γλυκό"]});
+def("ζεστός ζεστή ζεστό",{l:"ζεστός",p:"adjective",g:"warm, hot",f:["ζεστός / ζεστή / ζεστό"]});
+def("πολλά πολλοί πολλές πολύς",{l:"πολύς",p:"adjective · quantifier",g:"much, many",f:["πολύς / πολλή / πολύ (sg.)","πολλοί / πολλές / πολλά (pl.)"]});
+def("καινούργιος καινούργια καινούργιο καινούργιες",{l:"καινούργιος",p:"adjective",g:"new",f:["καινούργιος / -ια / -ιο"]});
+def("ήσυχος ήσυχη ήσυχο",{l:"ήσυχος",p:"adjective",g:"quiet, calm",f:["ήσυχος / -η / -ο"]});
+def("καθαρός καθαρή καθαρό",{l:"καθαρός",p:"adjective",g:"clean; clear; pure",f:["καθαρός / -ή / -ό"]});
+def("φωτεινός φωτεινή φωτεινό",{l:"φωτεινός",p:"adjective",g:"bright, luminous",f:["φωτεινός / -ή / -ό"]});
+def("γαλάζιος γαλάζια γαλάζιο",{l:"γαλάζιος",p:"adjective",g:"(light) blue",f:["γαλάζιος / -ια / -ιο"]});
+def("δυνατός δυνατή δυνατό",{l:"δυνατός",p:"adjective",g:"strong; loud",f:["δυνατός / -ή / -ό"]});
+def("φρέσκος φρέσκια φρέσκο φρέσκα",{l:"φρέσκος",p:"adjective",g:"fresh",f:["φρέσκος / φρέσκια / φρέσκο"]});
+def("παλιός παλιά παλιό παλιούς",{l:"παλιός",p:"adjective",g:"old (of things)",f:["παλιός / παλιά / παλιό","παλιούς — acc. m. pl."]});
+def("πολυσύχναστος πολυσύχναστη πολυσύχναστο",{l:"πολυσύχναστος",p:"adjective",g:"busy, crowded",f:["πολυσύχναστος / -η / -ο"]});
+def("κουρασμένος κουρασμένη κουρασμένο κουρασμένοι",{l:"κουρασμένος",p:"adjective",g:"tired, weary",f:["κουρασμένος / -η / -ο"]});
+def("ευχαριστημένος ευχαριστημένη ευχαριστημένο",{l:"ευχαριστημένος",p:"adjective",g:"pleased, glad",f:["ευχαριστημένος / -η / -ο"]});
+def("τελευταίος τελευταία τελευταίο",{l:"τελευταίος",p:"adjective",g:"last, final",f:["τελευταίος / -α / -ο"]});
+def("κρύος κρύα κρύο",{l:"κρύος",p:"adjective / noun",g:"cold",f:["κρύος / κρύα / κρύο (adj.)","το κρύο — the cold (noun)"]});
+def("βαρύς βαριά βαρύ",{l:"βαρύς",p:"adjective",g:"heavy",f:["βαρύς / βαριά / βαρύ"]});
+def("απότομος απότομη απότομο",{l:"απότομος",p:"adjective",g:"steep; abrupt",f:["απότομος / -η / -ο"]});
+def("ψηλός ψηλή ψηλό ψηλά",{l:"ψηλός",p:"adjective",g:"tall, high",f:["ψηλός / -ή / -ό","ψηλά — n. pl. / adv."]});
+def("απλός απλή απλό",{l:"απλός",p:"adjective",g:"simple, plain",f:["απλός / -ή / -ό"]});
+/* B7b — adjectives (2/2) */
+def("νόστιμος νόστιμη νόστιμο",{l:"νόστιμος",p:"adjective",g:"tasty, delicious",f:["νόστιμος / -η / -ο"]});
+def("γεμάτος γεμάτη γεμάτο",{l:"γεμάτος",p:"adjective",g:"full",f:["γεμάτος / -η / -ο"]});
+def("υπέροχος υπέροχη υπέροχο",{l:"υπέροχος",p:"adjective",g:"wonderful, marvellous",f:["υπέροχος / -η / -ο"]});
+def("σημαντικός σημαντική σημαντικό",{l:"σημαντικός",p:"adjective",g:"important",f:["σημαντικός / -ή / -ό"]});
+def("νέος νέα νέο",{l:"νέος",p:"adjective",g:"new; young",f:["νέος / νέα / νέο"]});
+def("φιλικός φιλική φιλικό φιλικοί",{l:"φιλικός",p:"adjective",g:"friendly",f:["φιλικός / -ή / -ό","φιλικοί — m. pl."]});
+def("απαιτητικός απαιτητική απαιτητικό",{l:"απαιτητικός",p:"adjective",g:"demanding",f:["απαιτητικός / -ή / -ό"]});
+def("πρωινός πρωινή πρωινό",{l:"πρωινός",p:"adjective",g:"morning, early",f:["πρωινός / -ή / -ό","also noun: πρωινό — breakfast"]});
+def("αδυσώπητος αδυσώπητη αδυσώπητο",{l:"αδυσώπητος",p:"adjective",g:"relentless, implacable",f:["αδυσώπητος / -η / -ο"]});
+def("ηλικιωμένος ηλικιωμένη ηλικιωμένο",{l:"ηλικιωμένος",p:"adjective",g:"elderly, aged",f:["ηλικιωμένος / -η / -ο"]});
+def("διαρκής διαρκή διαρκές",{l:"διαρκής",p:"adjective",g:"enduring, lasting, continual",f:["διαρκής (m/f) / διαρκές (n)","διαρκή — acc."]});
+def("σκόπιμος σκόπιμη σκόπιμο",{l:"σκόπιμος",p:"adjective",g:"deliberate, intentional",f:["σκόπιμος / -η / -ο"]});
+def("απαραίτητος απαραίτητη απαραίτητο",{l:"απαραίτητος",p:"adjective",g:"indispensable, necessary",f:["απαραίτητος / -η / -ο"]});
+def("άγριος άγρια άγριο",{l:"άγριος",p:"adjective",g:"wild, fierce, ferocious",f:["άγριος / άγρια / άγριο"]});
+def("επιδέξιος επιδέξια επιδέξιο",{l:"επιδέξιος",p:"adjective",g:"skilled, deft",f:["επιδέξιος / -α / -ο"]});
+def("άψογος άψογη άψογο άψογα",{l:"άψογος",p:"adjective",g:"flawless, impeccable",f:["άψογος / -η / -ο","άψογα — n. pl."]});
+def("νεαρός νεαρή νεαρό",{l:"νεαρός",p:"adjective",g:"young (person)",f:["νεαρός / -ή / -ό"]});
+def("παράξενος παράξενη παράξενο",{l:"παράξενος",p:"adjective",g:"strange, odd",f:["παράξενος / -η / -ο"]});
+def("ύπουλος ύπουλη ύπουλο",{l:"ύπουλος",p:"adjective",g:"treacherous, insidious",f:["ύπουλος / -η / -ο"]});
+def("αποφασισμένος αποφασισμένη αποφασισμένο",{l:"αποφασισμένος",p:"adjective",g:"determined, resolved",f:["αποφασισμένος / -η / -ο"]});
+def("παγωμένος παγωμένη παγωμένο",{l:"παγωμένος",p:"adjective",g:"frozen, freezing",f:["παγωμένος / -η / -ο"]});
+def("βίαιος βίαιη βίαιο",{l:"βίαιος",p:"adjective",g:"violent",f:["βίαιος / -η / -ο"]});
+def("αραιός αραιή αραιό",{l:"αραιός",p:"adjective",g:"thin, sparse (e.g. air)",f:["αραιός / -ή / -ό"]});
+def("τεράστιος τεράστια τεράστιο",{l:"τεράστιος",p:"adjective",g:"enormous, huge",f:["τεράστιος / -α / -ο"]});
+def("σύντομος σύντομη σύντομο",{l:"σύντομος",p:"adjective",g:"brief, short",f:["σύντομος / -η / -ο"]});
+def("ψεύτικος ψεύτικη ψεύτικο ψεύτικα",{l:"ψεύτικος",p:"adjective",g:"false, fake",f:["ψεύτικος / -η / -ο","ψεύτικα — n. pl."]});
+def("αληθινός αληθινή αληθινό",{l:"αληθινός",p:"adjective",g:"real, true, genuine",f:["αληθινός / -ή / -ό"]});
+/* B8a — verbs A1/A2 (1/2) — present 1sg/3sg/3pl + a past form */
+def("έχω έχει έχουμε έχουν είχε είχα είχαν",{l:"έχω",p:"verb",g:"to have",f:["έχω — I have","έχει — s/he has","έχουμε — we have","έχουν — they have","είχε — had (past)"]});
+def("είμαι είσαι είναι είμαστε είστε ήταν ήμουν",{l:"είμαι",p:"verb",g:"to be",f:["είμαι — I am","είναι — s/he / it is","είμαστε — we are","ήταν — was / were (past)"]});
+def("πηγαίνω πας πάει πάμε πάνε πήγα πήγε πήγαν",{l:"πηγαίνω",p:"verb",g:"to go",f:["πηγαίνω — I go","πάει — s/he goes","πάμε — we go","πάνε — they go","πήγε / πήγαν — went (past)"]});
+def("ξυπνάω ξυπνάει ξύπνησε",{l:"ξυπνάω",p:"verb",g:"to wake up",f:["ξυπνάω — I wake","ξυπνάει — s/he wakes","ξύπνησε — woke (past)"]});
+def("δίνω δίνει δίνουν έδωσε",{l:"δίνω",p:"verb",g:"to give",f:["δίνω — I give","δίνει — s/he gives","δίνουν — they give","έδωσε — gave (past)"]});
+def("περπατάω περπατάει περπατούν περπάτησε περπατούσε περπάτησαν",{l:"περπατάω",p:"verb",g:"to walk",f:["περπατάω — I walk","περπατάει — s/he walks","περπατούν — they walk","περπάτησε / περπατούσε — walked (past)"]});
+def("τρέχω τρέχει τρέχουν έτρεξε έτρεχε",{l:"τρέχω",p:"verb",g:"to run",f:["τρέχω — I run","τρέχει — s/he runs","τρέχουν — they run","έτρεχε — was running (past)"]});
+def("αγαπάω αγαπάει αγαπούν αγάπησε",{l:"αγαπάω",p:"verb",g:"to love",f:["αγαπάω — I love","αγαπάει — s/he loves","αγαπούν — they love"]});
+def("παίζω παίζει παίζουν έπαιξε παίξει παίξουν",{l:"παίζω",p:"verb",g:"to play",f:["παίζω — I play","παίζει — s/he plays","παίζουν — they play","παίξει — (subj.) play"]});
+def("πετάω πετάει πέταξε",{l:"πετάω",p:"verb",g:"to throw; to fly",f:["πετάω — I throw","πετάει — s/he throws","πέταξε — threw (past)"]});
+def("βλέπω βλέπει βλέπουν είδε είδαν",{l:"βλέπω",p:"verb",g:"to see",f:["βλέπω — I see","βλέπει — s/he sees","βλέπουν — they see","είδε / είδαν — saw (past)"]});
+def("θέλω θέλει θέλουν ήθελε",{l:"θέλω",p:"verb",g:"to want",f:["θέλω — I want","θέλει — s/he wants","θέλουν — they want","ήθελε — wanted (past)"]});
+def("γελάω γελάει γελάνε γέλασε",{l:"γελάω",p:"verb",g:"to laugh",f:["γελάω — I laugh","γελάει — s/he laughs","γελάνε — they laugh"]});
+def("διαβάζω διαβάζει διαβάζουν διάβασε",{l:"διαβάζω",p:"verb",g:"to read",f:["διαβάζω — I read","διαβάζει — s/he reads","διαβάζουν — they read","διάβασε — read (past)"]});
+def("κοιμάμαι κοιμάται κοιμούνται κοιμήθηκε",{l:"κοιμάμαι",p:"verb · deponent",g:"to sleep",f:["κοιμάμαι — I sleep","κοιμάται — s/he sleeps","κοιμούνται — they sleep","κοιμήθηκε — slept (past)"]});
+def("μπαίνω μπαίνει μπήκε",{l:"μπαίνω",p:"verb",g:"to enter, go in",f:["μπαίνω — I enter","μπαίνει — s/he enters","μπήκε — entered (past)"]});
+def("υπάρχω υπάρχει υπάρχουν υπήρχε",{l:"υπάρχω",p:"verb",g:"to exist; there is/are",f:["υπάρχει — there is","υπάρχουν — there are","υπήρχε — there was (past)"]});
+def("τρώω τρώει τρώνε έφαγε έτρωγε",{l:"τρώω",p:"verb",g:"to eat",f:["τρώω — I eat","τρώει — s/he eats","τρώνε — they eat","έφαγε — ate (past)"]});
+def("πίνω πίνει πίνουν ήπιε ήπιαν",{l:"πίνω",p:"verb",g:"to drink",f:["πίνω — I drink","πίνει — s/he drinks","πίνουν — they drink","ήπιε / ήπιαν — drank (past)"]});
+def("έρχομαι έρχεται έρχονται ήρθε",{l:"έρχομαι",p:"verb · deponent",g:"to come",f:["έρχομαι — I come","έρχεται — s/he comes","έρχονται — they come","ήρθε — came (past)"]});
+def("κόβω κόβει έκοψε",{l:"κόβω",p:"verb",g:"to cut",f:["κόβω — I cut","κόβει — s/he cuts","έκοψε — cut (past)"]});
+def("πλένω πλένει πλένουν έπλυνε",{l:"πλένω",p:"verb",g:"to wash",f:["πλένω — I wash","πλένει — s/he washes","πλένουν — they wash","έπλυνε — washed (past)"]});
+def("γράφω γράφει γράφουν έγραψε",{l:"γράφω",p:"verb",g:"to write",f:["γράφω — I write","γράφει — s/he writes","γράφουν — they write","έγραψε — wrote (past)"]});
+def("μαθαίνω μαθαίνει μαθαίνουν έμαθε μάθει",{l:"μαθαίνω",p:"verb",g:"to learn",f:["μαθαίνω — I learn","μαθαίνει — s/he learns","μαθαίνουν — they learn","έμαθε — learned (past)"]});
+def("μετράω μετράει μέτρησε",{l:"μετράω",p:"verb",g:"to count",f:["μετράω — I count","μετράει — s/he counts","μέτρησε — counted (past)"]});
+/* B8b — verbs A1/A2 (2/2) */
+def("ζωγραφίζω ζωγραφίζει ζωγράφισε ζωγραφίσει",{l:"ζωγραφίζω",p:"verb",g:"to paint, to draw",f:["ζωγραφίζω — I paint","ζωγραφίζει — s/he paints","ζωγράφισε — painted (past)"]});
+def("τραγουδάω τραγουδάει τραγουδούν τραγούδησε",{l:"τραγουδάω",p:"verb",g:"to sing",f:["τραγουδάω — I sing","τραγουδάει — s/he sings","τραγουδούν — they sing","τραγούδησε — sang (past)"]});
+def("ακούω ακούει ακούν άκουσε",{l:"ακούω",p:"verb",g:"to hear, to listen",f:["ακούω — I hear","ακούει — s/he hears","ακούν — they hear","άκουσε — heard (past)"]});
+def("ταξιδεύω ταξιδεύει ταξίδεψε",{l:"ταξιδεύω",p:"verb",g:"to travel",f:["ταξιδεύω — I travel","ταξιδεύει — s/he travels","ταξίδεψε — travelled (past)"]});
+def("αγοράζω αγοράζει αγόρασε",{l:"αγοράζω",p:"verb",g:"to buy",f:["αγοράζω — I buy","αγοράζει — s/he buys","αγόρασε — bought (past)"]});
+def("παίρνω παίρνει πήρε πήραν",{l:"παίρνω",p:"verb",g:"to take, to get",f:["παίρνω — I take","παίρνει — s/he takes","πήρε / πήραν — took (past)"]});
+def("βρίσκω βρίσκει βρήκε",{l:"βρίσκω",p:"verb",g:"to find",f:["βρίσκω — I find","βρίσκει — s/he finds","βρήκε — found (past)"]});
+def("μπορώ μπορεί μπορούσε",{l:"μπορώ",p:"verb",g:"can, to be able",f:["μπορώ — I can","μπορεί — s/he can","μπορούσε — could (past)"]});
+def("κολυμπάω κολυμπάει κολυμπούσε",{l:"κολυμπάω",p:"verb",g:"to swim",f:["κολυμπάω — I swim","κολυμπάει — s/he swims","κολυμπούσε — was swimming (past)"]});
+def("επισκέπτομαι επισκέπτεται επισκεπτόταν επισκέφτηκε",{l:"επισκέπτομαι",p:"verb · deponent",g:"to visit",f:["επισκέπτομαι — I visit","επισκέπτεται — s/he visits","επισκεπτόταν — was visiting (past)"]});
+def("κοιτάζω κοιτάζει κοίταξε",{l:"κοιτάζω",p:"verb",g:"to look (at)",f:["κοιτάζω — I look","κοιτάζει — s/he looks","κοίταξε — looked (past)"]});
+def("γίνομαι γίνεται έγινε",{l:"γίνομαι",p:"verb · deponent",g:"to become; to happen",f:["γίνομαι — I become","γίνεται — becomes / happens","έγινε — became / happened (past)"]});
+def("λέω λέει είπε",{l:"λέω",p:"verb",g:"to say, to tell",f:["λέω — I say","λέει — s/he says","είπε — said (past)"]});
+def("χαμογελάω χαμογελάει χαμογέλασε",{l:"χαμογελάω",p:"verb",g:"to smile",f:["χαμογελάω — I smile","χαμογελάει — s/he smiles","χαμογέλασε — smiled (past)"]});
+def("κουβαλάω κουβαλάει κουβαλούσαν",{l:"κουβαλάω",p:"verb",g:"to carry",f:["κουβαλάω — I carry","κουβαλάει — s/he carries","κουβαλούσαν — were carrying (past)"]});
+def("ανεβαίνω ανεβαίνει ανέβηκε ανέβηκαν",{l:"ανεβαίνω",p:"verb",g:"to go up, to climb",f:["ανεβαίνω — I go up","ανεβαίνει — goes up","ανέβηκε / ανέβηκαν — went up (past)"]});
+def("στήνω στήνει έστησε έστησαν",{l:"στήνω",p:"verb",g:"to set up, to pitch",f:["στήνω — I set up","στήνει — sets up","έστησε / έστησαν — set up (past)"]});
+def("ανάβω ανάβει άναψε άναψαν",{l:"ανάβω",p:"verb",g:"to light, to switch on",f:["ανάβω — I light","ανάβει — lights","άναψε / άναψαν — lit (past)"]});
+def("μαγειρεύω μαγειρεύει μαγείρεψε μαγείρεψαν",{l:"μαγειρεύω",p:"verb",g:"to cook",f:["μαγειρεύω — I cook","μαγειρεύει — cooks","μαγείρεψε / μαγείρεψαν — cooked (past)"]});
+def("δουλεύω δουλεύει δούλεψε",{l:"δουλεύω",p:"verb",g:"to work",f:["δουλεύω — I work","δουλεύει — s/he works","δούλεψε — worked (past)"]});
+def("ξεκινάω ξεκινάει ξεκίνησε",{l:"ξεκινάω",p:"verb",g:"to start, to set off",f:["ξεκινάω — I start","ξεκινάει — starts","ξεκίνησε — started (past)"]});
+def("κερδίζω κερδίζει κέρδισε",{l:"κερδίζω",p:"verb",g:"to win, to earn",f:["κερδίζω — I win","κερδίζει — wins","κέρδισε — won (past)"]});
+def("μιλάω μιλάει μίλησε",{l:"μιλάω",p:"verb",g:"to speak, to talk",f:["μιλάω — I speak","μιλάει — speaks","μίλησε — spoke (past)"]});
+def("αρέσει αρέσουν άρεσε",{l:"αρέσω",p:"verb",g:"to please — 'μου αρέσει' = I like it",f:["μου αρέσει — I like (it pleases me)","του αρέσει — he likes","άρεσε — liked (past)"]});
+/* B8c — verbs C1 */
+def("παραμένω παραμένει παρέμεινε",{l:"παραμένω",p:"verb",g:"to remain, to stay",f:["παραμένω — I remain","παραμένει — remains","παρέμεινε — remained (past)"]});
+def("αντέχω αντέχει αντέξει άντεξε",{l:"αντέχω",p:"verb",g:"to endure, to withstand",f:["αντέχω — I endure","αντέχει — endures","άντεξε — endured (past)","αντέξει — (subj.) endure"]});
+def("ταράζω ταράζει τάραζε",{l:"ταράζω",p:"verb",g:"to disturb, to unsettle",f:["ταράζω — I unsettle","ταράζει — unsettles","τάραζε — was unsettling (past)"]});
+def("καταλαβαίνω καταλαβαίνει κατάλαβε κατανοήσουν",{l:"καταλαβαίνω",p:"verb",g:"to understand, to comprehend",f:["καταλαβαίνω — I understand","καταλαβαίνει — understands","κατάλαβε — understood (past)"]});
+def("παραδίνομαι παραδίνεται παραδόθηκε παραδοθεί",{l:"παραδίνομαι",p:"verb · deponent",g:"to surrender, to give in",f:["παραδίνομαι — I surrender","παραδίνεται — surrenders","παραδόθηκε — surrendered (past)"]});
+def("πιστεύω πιστεύει πίστευε πίστεψε",{l:"πιστεύω",p:"verb",g:"to believe",f:["πιστεύω — I believe","πιστεύει — believes","πίστευε — believed (past)"]});
+def("πλησιάζω πλησιάζει πλησίασε πλησίαζε",{l:"πλησιάζω",p:"verb",g:"to approach, to draw near",f:["πλησιάζω — I approach","πλησιάζει — approaches","πλησίασε / πλησίαζε — approached (past)"]});
+def("κοπάζω κοπάζει κόπασε",{l:"κοπάζω",p:"verb",g:"to subside, to die down",f:["κοπάζει — subsides","κόπασε — subsided (past)"]});
+def("χαϊδεύω χαϊδεύει χάιδευε χάιδευαν",{l:"χαϊδεύω",p:"verb",g:"to caress, to stroke",f:["χαϊδεύω — I caress","χαϊδεύει — caresses","χάιδευαν — were caressing (past)"]});
+def("ατενίζω ατενίζει ατένισε",{l:"ατενίζω",p:"verb",g:"to gaze at, to behold",f:["ατενίζω — I gaze","ατενίζει — gazes","ατένισε — gazed (past)"]});
+def("στοχάζομαι στοχάζεται στοχάστηκε",{l:"στοχάζομαι",p:"verb · deponent",g:"to contemplate, to reflect",f:["στοχάζομαι — I contemplate","στοχάζεται — contemplates","στοχάστηκε — contemplated (past)"]});
+def("συλλογίζομαι συλλογίζεται συλλογίστηκε",{l:"συλλογίζομαι",p:"verb · deponent",g:"to muse, to ponder",f:["συλλογίζομαι — I ponder","συλλογίζεται — ponders","συλλογίστηκε — pondered (past)"]});
+def("εξαπατώ εξαπατά εξαπάτησε εξαπατήσει",{l:"εξαπατώ",p:"verb",g:"to deceive",f:["εξαπατώ — I deceive","εξαπατά — deceives","εξαπάτησε — deceived (past)"]});
+def("μιμούμαι μιμείται μιμούνταν",{l:"μιμούμαι",p:"verb · deponent",g:"to imitate, to mimic",f:["μιμούμαι — I imitate","μιμείται — imitates","μιμούνταν — was imitating (past)"]});
+def("εκθέτω εκθέτει εξέθετε",{l:"εκθέτω",p:"verb",g:"to exhibit; to expose",f:["εκθέτω — I exhibit","εκθέτει — exhibits","εξέθετε — was exhibiting (past)"]});
+def("υποψιάζομαι υποψιάζεται υποψιαζόταν",{l:"υποψιάζομαι",p:"verb · deponent",g:"to suspect",f:["υποψιάζομαι — I suspect","υποψιάζεται — suspects","υποψιαζόταν — suspected (past)"]});
+def("παρατηρώ παρατηρεί παρατήρησε",{l:"παρατηρώ",p:"verb",g:"to observe, to notice",f:["παρατηρώ — I observe","παρατηρεί — observes","παρατήρησε — observed (past)"]});
+def("εξετάζω εξετάζει εξέτασε",{l:"εξετάζω",p:"verb",g:"to examine, to scrutinise",f:["εξετάζω — I examine","εξετάζει — examines","εξέτασε — examined (past)"]});
+def("μεγαλώνω μεγαλώνει μεγάλωνε",{l:"μεγαλώνω",p:"verb",g:"to grow up; to raise",f:["μεγαλώνω — I grow up","μεγαλώνει — grows up","μεγάλωνε — was growing up (past)"]});
+def("ομολογώ ομολογεί ομολόγησε",{l:"ομολογώ",p:"verb",g:"to admit, to confess",f:["ομολογώ — I admit","ομολογεί — admits","ομολόγησε — admitted (past)"]});
+def("ξεγελάω ξεγελάει ξεγέλασε ξεγελάσει",{l:"ξεγελάω",p:"verb",g:"to fool, to trick",f:["ξεγελάω — I fool","ξεγελάει — fools","ξεγέλασε — fooled (past)"]});
+def("χτυπάω χτυπάει χτύπησε χτυπούσε",{l:"χτυπάω",p:"verb",g:"to hit, to strike; to beat",f:["χτυπάω — I strike","χτυπάει — strikes","χτυπούσε — was striking (past)"]});
+def("πονάω πονάει πονούσαν",{l:"πονάω",p:"verb",g:"to hurt, to ache",f:["πονάω — I hurt","πονάει — hurts","πονούσαν — were hurting (past)"]});
+def("φοβάμαι φοβάται φοβόταν",{l:"φοβάμαι",p:"verb · deponent",g:"to fear, to be afraid",f:["φοβάμαι — I am afraid","φοβάται — is afraid","φοβόταν — was afraid (past)"]});
+def("αρνούμαι αρνείται αρνήθηκε",{l:"αρνούμαι",p:"verb · deponent",g:"to refuse, to deny",f:["αρνούμαι — I refuse","αρνείται — refuses","αρνήθηκε — refused (past)"]});
+def("σταματάω σταματάει σταμάτησε σταματήσει",{l:"σταματάω",p:"verb",g:"to stop",f:["σταματάω — I stop","σταματάει — stops","σταμάτησε — stopped (past)"]});
+def("κρατάω κρατάει κράτησε κρατούσε",{l:"κρατάω",p:"verb",g:"to hold, to keep",f:["κρατάω — I hold","κρατάει — holds","κρατούσε — was holding (past)"]});
+def("απαιτώ απαιτεί απαιτούσε",{l:"απαιτώ",p:"verb",g:"to demand, to require",f:["απαιτώ — I demand","απαιτεί — demands","απαιτούσε — demanded (past)"]});
+def("κατακτώ κατακτά κατέκτησε",{l:"κατακτώ",p:"verb",g:"to conquer, to attain",f:["κατακτώ — I conquer","κατακτά — conquers","κατέκτησε — conquered (past)"]});
+def("νιώθω νιώθει ένιωσε",{l:"νιώθω",p:"verb",g:"to feel",f:["νιώθω — I feel","νιώθει — feels","ένιωσε — felt (past)"]});
+def("κατεβαίνω κατεβαίνει κατέβηκε",{l:"κατεβαίνω",p:"verb",g:"to go down, to descend",f:["κατεβαίνω — I go down","κατεβαίνει — goes down","κατέβηκε — went down (past)"]});
+def("επιβιώνω επιβιώνει επιβίωσε επιβιώσει",{l:"επιβιώνω",p:"verb",g:"to survive",f:["επιβιώνω — I survive","επιβιώνει — survives","επιβίωσε — survived (past)"]});
+/* B9 — proper names, place names, and remaining high-frequency words */
+def("τομ",{l:"Τομ",p:"proper noun",g:"Tom — a name; the article carries the case: ο Τομ (nom.), τον Τομ (acc.)"});
+def("μαξ",{l:"Μαξ",p:"proper noun",g:"Max — the dog's name; ο Μαξ / τον Μαξ"});
+def("άννα",{l:"Άννα",p:"proper noun",g:"Anna; η Άννα (nom.), την Άννα (acc.)"});
+def("μαρία",{l:"Μαρία",p:"proper noun",g:"Maria; η Μαρία / τη Μαρία"});
+def("νίκος νίκο",{l:"Νίκος",p:"proper noun",g:"Nikos; ο Νίκος (nom.), τον Νίκο (acc.)"});
+def("ελλάδα",{l:"Ελλάδα",p:"noun · feminine (place)",g:"Greece",f:["στην Ελλάδα — in Greece"]});
+def("άνθρωποι άνθρωπος ανθρώπους",{l:"άνθρωπος",p:"noun · masculine",g:"person; (pl.) people",f:["άνθρωπος — sg.","άνθρωποι — pl. (people)"]});
+def("ψάρι ψάρια",{l:"ψάρι",p:"noun · neuter",g:"fish",f:["ψάρι — sg.","ψάρια — pl."]});
+def("μαζί",{l:"μαζί",p:"adverb",g:"together"});
+def("ήδη",{l:"ήδη",p:"adverb",g:"already"});
+def("ποτέ",{l:"ποτέ",p:"adverb",g:"never (with δεν); ever"});
+def("δεν",{l:"δεν",p:"particle · negation",g:"not — negates the verb",f:["δεν τρέχει — does not run"]});
+def("που",{l:"που",p:"pronoun · relative",g:"who, which, that"});
+def("εδώ",{l:"εδώ",p:"adverb",g:"here"});
+/* B10 — gap-fill: extra article forms, leftover words, fixed phrases */
+def("του της τις τους στους",{l:"του / της / τους",p:"article · definite",g:"the — genitive (του / της) and acc.-plural (τους / τις) forms",f:["του / της — gen. sg. (m·n / f)","τους / τις / τα — acc. pl. (m / f / n)","στους — σε + τους"]});
+def("φτάνω φτάνει έφτασε",{l:"φτάνω",p:"verb",g:"to arrive, to reach",f:["φτάνω — I arrive","φτάνει — arrives","έφτασε — arrived (past)"]});
+def("δάσκαλος δάσκαλο δασκάλου",{l:"δάσκαλος",p:"noun · masculine",g:"teacher (male)",f:["δάσκαλος — nom.","δασκάλου — gen. (of the teacher)","fem.: δασκάλα"]});
+def("φίλος φίλο φίλοι φίλους",{l:"φίλος",p:"noun · masculine",g:"friend",f:["φίλος — nom. sg.","φίλοι — nom. pl.","φίλους — acc. pl."]});
+def("δεκαετίες δεκαετία",{l:"δεκαετία",p:"noun · feminine",g:"decade",f:["δεκαετία — sg.","δεκαετίες — pl.","επί δεκαετίες — for decades"]});
+def("κίνηση κινήσεις",{l:"κίνηση",p:"noun · feminine",g:"movement, motion",f:["σε κίνηση — in motion"]});
+def("φορά φορές",{l:"φορά",p:"noun · feminine",g:"time, occasion",f:["φορά — sg.","φορές — pl."]});
+def("ελληνικά",{l:"ελληνικά",p:"noun · neuter pl. / adjective",g:"Greek (the language); Greek (n. pl.)"});
+def("τελικός τελική τελικό",{l:"τελικός",p:"adjective",g:"final, eventual",f:["τελικός / -ή / -ό"]});
+def("περασμένος περασμένη περασμένο",{l:"περασμένος",p:"adjective",g:"last, past",f:["το περασμένο σαββατοκύριακο — last weekend"]});
+def("απόλυτος απόλυτη απόλυτο",{l:"απόλυτος",p:"adjective",g:"absolute, utter",f:["απόλυτος / -η / -ο"]});
+def("αρκετός αρκετή αρκετό",{l:"αρκετός",p:"adjective",g:"enough, sufficient",f:["αρκετός / -ή / -ό"]});
+def("χρυσός χρυσή χρυσό",{l:"χρυσός",p:"adjective",g:"golden, gold",f:["χρυσός / -ή / -ό"]});
+def("ψύχραιμος ψύχραιμη ψύχραιμο",{l:"ψύχραιμος",p:"adjective",g:"composed, level-headed",f:["ψύχραιμος / -η / -ο"]});
+def("ενθουσιασμένος ενθουσιασμένη ενθουσιασμένο",{l:"ενθουσιασμένος",p:"adjective",g:"excited, thrilled",f:["ενθουσιασμένος / -η / -ο"]});
+def("εξαντλημένος εξαντλημένη εξαντλημένο",{l:"εξαντλημένος",p:"adjective",g:"exhausted",f:["εξαντλημένος / -η / -ο"]});
+def("επικίνδυνος επικίνδυνη επικίνδυνο επικίνδυνα",{l:"επικίνδυνος",p:"adjective / adverb",g:"dangerous; (adv.) dangerously",f:["επικίνδυνος / -η / -ο","επικίνδυνα — dangerously"]});
+def("βιωμένος βιωμένη βιωμένο βιωμένης",{l:"βιωμένος",p:"adjective · participle",g:"lived, experienced (of a life)",f:["από βιωμένος (βιώνω — to live, experience)"]});
+def("φωτεινά",{l:"φωτεινός",p:"adjective / adverb",g:"bright; brightly"});
+def("τέτοιος τέτοια τέτοιο",{l:"τέτοιος",p:"determiner",g:"such, this kind of",f:["τέτοιος / -α / -ο","σε τέτοιο βαθμό — to such a degree"]});
+def("κανείς κανένας κανέναν",{l:"κανείς",p:"pronoun",g:"no one, nobody; (in questions) anyone",f:["κανείς / κανένας — nom.","κανέναν — acc."]});
+def("αυτούς",{l:"αυτούς",p:"pronoun · personal",g:"them (accusative, masc. plural)",f:["αυτοί — nom.","αυτούς — acc."]});
+def("απλώς",{l:"απλώς",p:"adverb",g:"simply, just, merely"});
+def("σχολαστικά",{l:"σχολαστικά",p:"adverb",g:"meticulously, scrupulously"});
+def("αξιοσημείωτα",{l:"αξιοσημείωτα",p:"adverb",g:"remarkably, notably"});
+def("καθώς",{l:"καθώς",p:"conjunction",g:"as, while; since"});
+def("όταν",{l:"όταν",p:"conjunction",g:"when, whenever"});
+def("παρά",{l:"παρά",p:"preposition / conjunction",g:"despite, contrary to; than; but"});
+def("επί",{l:"επί",p:"preposition",g:"for (a duration); on, upon",f:["επί χρόνια — for years"]});
+def("ούτε",{l:"ούτε",p:"conjunction",g:"neither, nor; not even"});
+def("όχι",{l:"όχι",p:"adverb",g:"no, not"});
+defp("μερικές φορές",{l:"μερικές φορές",p:"adverb (phrase)",g:"sometimes"});
+defp("μέσα από",{l:"μέσα από",p:"preposition (phrase)",g:"through"});
+// ---- B-FILL: glued multiword tokens (article / particle / clitic + word) ----
+defp("Η μοναχικότητα",{l:"μοναχικότητα",p:"article + noun · feminine",g:"the solitude — fem. noun with its definite article η",f:["η μοναχικότητα — nom.","τη(ν) μοναχικότητα — acc.","της μοναχικότητας — gen."]});
+defp("Ο θάνατος",{l:"θάνατος",p:"article + noun · masculine",g:"death — masc. noun with article ο",f:["ο θάνατος — nom.","τον θάνατο — acc.","του θανάτου — gen."]});
+defp("Ο φόβος",{l:"φόβος",p:"article + noun · masculine",g:"fear — masc. noun with article ο",f:["ο φόβος — nom.","τον φόβο — acc.","του φόβου — gen."]});
+defp("Σε τέτοιο",{l:"τέτοιος",p:"preposition + determiner",g:"in such (a) — σε 'in' + τέτοιο 'such, of that kind'",f:["τέτοιος / τέτοια / τέτοιο — such (m/f/n)","σε τέτοιο βαθμό — to such a degree"]});
+defp("Το βράδυ",{l:"βράδυ",p:"article + noun · neuter (adverbial)",g:"the evening / in the evening — βράδυ with article το, often used adverbially",f:["το βράδυ — the evening / at night","τα βράδια — the evenings"]});
+defp("Το περασμένο",{l:"περασμένος",p:"article + adjective",g:"the past / last — περασμένος (participle of περνώ) with article το",f:["περασμένος / -η / -ο — past, last","το περασμένο καλοκαίρι — last summer"]});
+defp("Τον περασμένο",{l:"περασμένος",p:"article (acc.) + adjective",g:"(during) the last — accusative τον + περασμένο, as in 'last month'",f:["τον περασμένο μήνα — last month","την περασμένη εβδομάδα — last week"]});
+defp("ένα ακόμη",{l:"ακόμη",p:"numeral + adverb",g:"one more / yet another — ένα 'one' + ακόμη 'still, more'",f:["ακόμη — still, yet, even, more","ένα ακόμη / ακόμη ένα — one more"]});
+defp("ακόμη κι αν",{l:"ακόμη κι αν",p:"conjunction (phrase)",g:"even if — concessive; the clause takes the subjunctive",f:["κι = και before a vowel","ακόμη κι αν χάσει — even if he loses"]});
+defp("από το",{l:"από",p:"preposition + article",g:"from the — από 'from' + neuter article το",f:["από τον / από την / από το — from the (m/f/n)","από το σπίτι — from the house"]});
+defp("η ανθεκτικότητα",{l:"ανθεκτικότητα",p:"article + noun · feminine",g:"resilience, endurance — fem. noun with article η",f:["η ανθεκτικότητα — nom.","την ανθεκτικότητα — acc.","της ανθεκτικότητας — gen."]});
+defp("η απόλυτη",{l:"απόλυτος",p:"article + adjective · feminine",g:"the absolute — απόλυτος (fem. απόλυτη) with article η",f:["απόλυτος / απόλυτη / απόλυτο — absolute (m/f/n)","η απόλυτη μοναξιά — utter solitude"]});
+defp("η αυγή",{l:"αυγή",p:"article + noun · feminine",g:"the dawn, daybreak — fem. noun with article η",f:["η αυγή — nom.","την αυγή — acc.","της αυγής — gen."]});
+defp("να δει",{l:"βλέπω",p:"particle να + verb (subjunctive)",g:"to see / that he see — perfective subjunctive of βλέπω after να",f:["βλέπω — I see","να δω / να δεις / να δει — that I / you / he see","είδε — s/he saw"]});
+defp("σε κίνηση",{l:"κίνηση",p:"preposition + noun · feminine",g:"in motion — σε 'in' + κίνηση 'movement'",f:["η κίνηση — the motion, movement","σε κίνηση — in motion, moving"]});
+defp("τα κρυοπαγήματα",{l:"κρυοπαγήματα",p:"article + noun · neuter pl.",g:"frostbite — neuter plural noun with article τα",f:["τα κρυοπαγήματα — nom./acc.","των κρυοπαγημάτων — gen."]});
+defp("του αρέσει",{l:"αρέσω",p:"clitic + verb",g:"he/she likes — lit. 'it pleases to-him'; του = to-him + αρέσει = pleases",f:["μου / σου / του αρέσει — I / you / he like(s)","μου αρέσουν — I like (plural things)","του άρεσε — he liked"]});
+defp("του δασκάλου",{l:"δάσκαλος",p:"article (gen.) + noun · masculine",g:"of the teacher — genitive του 'of the' + δασκάλου",f:["ο δάσκαλος — nom.","τον δάσκαλο — acc.","του δασκάλου — gen."]});
+defp("του ωκεανού",{l:"ωκεανός",p:"article (gen.) + noun · masculine",g:"of the ocean — genitive του 'of the' + ωκεανού",f:["ο ωκεανός — nom.","τον ωκεανό — acc.","του ωκεανού — gen."]});
+// ---- B-FILL2: words that appear standalone in idiomatic (snapped) sentences ----
+def("αν",{l:"αν",p:"conjunction",g:"if; whether — introduces conditionals; takes the subjunctive",f:["αν θέλεις — if you want","ακόμη κι αν — even if"]});
+def("κι",{l:"κι (= και)",p:"conjunction",g:"and — the form of και used before a vowel",f:["κι εγώ — me too","κι αν — even if"]});
+def("δει",{l:"βλέπω",p:"verb (subjunctive)",g:"see — perfective subjunctive of βλέπω, used after να / θα",f:["να δω / να δεις / να δει — that I / you / he see","βλέπω — I see","είδε — saw (past)"]});
+def("σ",{l:"σ' (= σε / σου)",p:"preposition / clitic (elided)",g:"elided form used before a vowel — σε 'to, at, in', or the weak pronoun σου / σε 'you'",f:["σ' αγαπώ — I love you","σ' ένα λεπτό — in a minute"]});
+/* ---- batch: A1 added-stories vocabulary ---- */
+def("κήπος κήπο κήποι", {l:"κήπος", p:"noun · masculine", g:"garden", f:["κήπος — nom. sg.","κήπο — acc. sg.","κήποι — pl."]});
+def("κάθομαι κάθεται κάθονται", {l:"κάθομαι", p:"verb · deponent", g:"to sit", f:["κάθομαι — I sit","κάθεται — he/she sits","κάθονται — they sit"]});
+def("πουλί πουλιά", {l:"πουλί", p:"noun · neuter", g:"bird", f:["πουλί — nom./acc. sg.","πουλιά — pl."]});
+def("εγώ", {l:"εγώ", p:"pronoun · personal", g:"I", f:["εγώ — 1st person sg.","εμείς — 1st person pl."]});
+def("εμείς", {l:"εμείς", p:"pronoun · personal", g:"we", f:["εμείς — 1st person pl.","εγώ — 1st person sg."]});
+def("οικογένεια οικογένειας οικογένειες", {l:"οικογένεια", p:"noun · feminine", g:"family", f:["οικογένεια — nom./acc. sg.","οικογένειας — gen. sg.","οικογένειες — pl."]});
+def("ευγενικός ευγενική ευγενικό ευγενικοί", {l:"ευγενικός", p:"adjective", g:"kind, polite", f:["ευγενικός — masc.","ευγενική — fem.","ευγενικό — neut."]});
+def("πατέρας πατέρα πατέρες", {l:"πατέρας", p:"noun · masculine", g:"father", f:["πατέρας — nom. sg.","πατέρα — acc./gen. sg.","πατέρες — pl."]});
+def("αδελφός αδελφό αδελφοί αδέλφια", {l:"αδελφός", p:"noun · masculine", g:"brother", f:["αδελφός — nom. sg.","αδελφό — acc. sg.","αδελφοί — pl. (brothers)","αδέλφια — pl. (siblings)"]});
+def("μένω μένει μένουμε μένουν", {l:"μένω", p:"verb", g:"to live, stay", f:["μένω — I live","μένει — he/she lives","μένουμε — we live","μένουν — they live"]});
+def("τρώμε", {l:"τρώω", p:"verb", g:"to eat", f:["τρώω — I eat","τρώει — he/she eats","τρώμε — we eat","τρώνε — they eat"]});
+def("αγαπώ", {l:"αγαπώ", p:"verb", g:"to love", f:["αγαπώ — I love","αγαπάει / αγαπά — he/she loves","αγαπάμε — we love","αγαπούν — they love"]});
+def("φούρνος φούρνο φούρνοι", {l:"φούρνος", p:"noun · masculine", g:"bakery, oven", f:["φούρνος — nom. sg.","φούρνο — acc. sg.","φούρνοι — pl."]});
+def("γυναίκα γυναίκας γυναίκες", {l:"γυναίκα", p:"noun · feminine", g:"woman", f:["γυναίκα — nom./acc. sg.","γυναίκας — gen. sg.","γυναίκες — pl."]});
+def("εκεί", {l:"εκεί", p:"adverb", g:"there", f:["εκεί — there","εδώ — here"]});
+def("σήμερα", {l:"σήμερα", p:"adverb", g:"today", f:["σήμερα — today","αύριο — tomorrow","χθες — yesterday"]});
+def("γκρι", {l:"γκρι", p:"adjective · invariable", g:"grey", f:["γκρι — same for all genders"]});
+def("βρέχει", {l:"βρέχει", p:"verb · impersonal", g:"it rains", f:["βρέχει — it is raining","έβρεχε — it was raining"]});
+def("τσάι τσάγια", {l:"τσάι", p:"noun · neuter", g:"tea", f:["τσάι — nom./acc. sg.","τσάγια — pl."]});
+def("καναπές καναπέ καναπέδες", {l:"καναπές", p:"noun · masculine", g:"sofa, couch", f:["καναπές — nom. sg.","καναπέ — acc. sg.","καναπέδες — pl."]});
+def("έξω", {l:"έξω", p:"adverb", g:"outside", f:["έξω — outside","μέσα — inside"]});
+def("βροχή βροχής βροχές", {l:"βροχή", p:"noun · feminine", g:"rain", f:["βροχή — nom./acc. sg.","βροχής — gen. sg.","βροχές — pl."]});
+/*__GEND__*/
+
+/* =========================================================================
+   HOW TO ADD A STORY  —  the whole app is data-driven, so adding one is easy.
+   -------------------------------------------------------------------------
+   1. Copy any object in the STORIES array below and edit it.
+   2. Fields:
+        tier   "A1" | "A2" | "C1"      (sets the badge colour + label)
+        badge  "a1" | "a2" | "c1"
+        title  full title shown above the story
+        short  1-2 word label for the story-picker chip
+        s      an array of SENTENCES. Each sentence is a 2-item array:
+                 [ "word|lemma word|lemma ...", "natural Greek sentence." ]
+   3. First string = the WORD-BY-WORD line, in ENGLISH order:
+        - each token is   english|greek   (a single pipe between the two)
+        - attach punctuation to the token:   dog|skylo.   happy|xaroumenos,
+        - for a phrase with a space on EITHER side, use _ :
+            there_is|yparxei   ocean's|tou_okeanou   In_the|To
+        - proper names: bare Greek form (Tom|Tom); the article lives only
+          in the natural sentence.
+        - every token needs a real Greek word - never leave the right side blank.
+   4. Second string = the fully idiomatic Greek for that ONE sentence.
+        Because each sentence carries its own translation, the "snap to natural
+        Greek" feature and every counter line up automatically.
+   5. Tiers may hold any number of stories; tierIdx below lists each tier's
+      story indices explicitly (they need not be contiguous — new stories are
+      appended at the end of STORIES and pointed to from the right tier).
+   compile() turns all of this into tokens, distinct-word groups, and counts.
+   ========================================================================= */
+
+function parseLine(line){
+  const out=[];
+  line.trim().split(/\s+/).forEach(chunk=>{
+    if(!chunk)return;
+    let core=chunk, trail="";
+    const m=chunk.match(/^(.*?)([.,;:!?·]+)$/);
+    if(m){core=m[1];trail=m[2];}
+    if(core){
+      const i=core.indexOf("|");
+      let en,gr;
+      if(i>=0){en=core.slice(0,i);gr=core.slice(i+1);} else {en=core;gr=core;}
+      out.push({t:en.replace(/_/g," "),g:gr.replace(/_/g," ")});
+    }
+    for(const ch of trail) out.push({t:ch,p:1});
+  });
+  return out;
+}
+
+function compile(s){
+  const map={}; let order=0,total=0;
+  s._sents=s.s.map(pair=>{
+    const toks=parseLine(pair[0]);
+    let maxGi=0,tc=0;
+    toks.forEach(tok=>{
+      if(tok.p)return;
+      total++; tc++;
+      const k=tok.t.toLowerCase();
+      if(!(k in map)){order++; map[k]=order;}
+      tok._gi=map[k];
+      if(tok._gi>maxGi)maxGi=tok._gi;
+    });
+    return {toks,nat:pair[1],maxGi,transCount:tc};
+  });
+  s._N=order; s._total=total;
+}
+
+const STORIES=[
+  /* ===================== A1 · Beginner ===================== */
+  { tier:"A1", badge:"a1", title:"Tom and His Dog", short:"The Dog", s:[
+    ["Tom|Τομ has|έχει a|έναν big|μεγάλο dog|σκύλο.", "Ο Τομ έχει έναν μεγάλο σκύλο."],
+    ["The|Ο dog|σκύλος is|είναι black|μαύρος and|και big|μεγάλος.", "Ο σκύλος είναι μαύρος και μεγάλος."],
+    ["His|Το name|όνομα is|είναι Max|Μαξ.", "Το όνομά του είναι Μαξ."],
+    ["Max|Μαξ is|είναι a|ένας good|καλός dog|σκύλος.", "Ο Μαξ είναι ένας καλός σκύλος."],
+    ["Every|Κάθε morning|πρωί Tom|Τομ wakes|ξυπνάει.", "Κάθε πρωί ο Τομ ξυπνάει."],
+    ["He|Αυτός gives|δίνει Max|Μαξ food|φαγητό and|και water|νερό.", "Δίνει στον Μαξ φαγητό και νερό."],
+    ["Then|Μετά Tom|Τομ and|και Max|Μαξ go|πάνε to|σε the|το park|πάρκο.", "Μετά ο Τομ και ο Μαξ πάνε στο πάρκο."],
+    ["The|Το park|πάρκο is|είναι near|κοντά the|στο house|σπίτι.", "Το πάρκο είναι κοντά στο σπίτι."],
+    ["They|Αυτοί walk|περπατούν and|και run|τρέχουν.", "Περπατούν και τρέχουν."],
+    ["Max|Μαξ likes|αγαπάει to|να play|παίζει with|με a|μια red|κόκκινη ball|μπάλα.", "Στον Μαξ αρέσει να παίζει με μια κόκκινη μπάλα."],
+    ["Tom|Τομ throws|πετάει the|τη ball|μπάλα.", "Ο Τομ πετάει τη μπάλα."],
+    ["Max|Μαξ runs|τρέχει to|σε it|αυτήν.", "Ο Μαξ τρέχει σ' αυτήν."],
+    ["A|Μια small|μικρή cat|γάτα sees|βλέπει them|αυτούς.", "Μια μικρή γάτα τους βλέπει."],
+    ["The|Η cat|γάτα is|είναι white|λευκή.", "Η γάτα είναι λευκή."],
+    ["Max|Μαξ wants|θέλει to|να play|παίξει but|αλλά the|η cat|γάτα runs|τρέχει away|μακριά.", "Ο Μαξ θέλει να παίξει, αλλά η γάτα τρέχει μακριά."],
+    ["Tom|Τομ and|και Max|Μαξ laugh|γελάνε.", "Ο Τομ και ο Μαξ γελάνε."],
+    ["They|Αυτοί are|είναι very|πολύ happy|χαρούμενοι.", "Είναι πολύ χαρούμενοι."],
+    ["At|Το evening|βράδυ they|αυτοί go|πάνε home|σπίτι.", "Το βράδυ πάνε σπίτι."],
+    ["Tom|Τομ reads|διαβάζει a|ένα book|βιβλίο and|και Max|Μαξ sleeps|κοιμάται.", "Ο Τομ διαβάζει ένα βιβλίο και ο Μαξ κοιμάται."],
+    ["Good|Καλή night|νύχτα.", "Καληνύχτα."]
+  ]},
+  { tier:"A1", badge:"a1", title:"Anna and the Apple", short:"The Apple", s:[
+    ["Anna|Άννα is|είναι a|ένα small|μικρό girl|κορίτσι.", "Η Άννα είναι ένα μικρό κορίτσι."],
+    ["Anna|Άννα is|είναι hungry|πεινασμένη.", "Η Άννα είναι πεινασμένη."],
+    ["She|Αυτή enters|μπαίνει the|στην kitchen|κουζίνα.", "Αυτή μπαίνει στην κουζίνα."],
+    ["On|Πάνω the|στο table|τραπέζι there_is|υπάρχει a|ένα red|κόκκινο apple|μήλο.", "Πάνω στο τραπέζι υπάρχει ένα κόκκινο μήλο."],
+    ["The|Το apple|μήλο is|είναι sweet|γλυκό.", "Το μήλο είναι γλυκό."],
+    ["Anna|Άννα eats|τρώει the|το apple|μήλο.", "Η Άννα τρώει το μήλο."],
+    ["Then|Μετά she|αυτή drinks|πίνει milk|γάλα.", "Μετά πίνει γάλα."],
+    ["Her|Η mother|μητέρα comes|έρχεται to|σε the|την kitchen|κουζίνα.", "Η μητέρα της έρχεται στην κουζίνα."],
+    ["The|Η mother|μητέρα cuts|κόβει bread|ψωμί.", "Η μητέρα κόβει ψωμί."],
+    ["Anna|Άννα and|και her|η mother|μητέρα eat|τρώνε bread|ψωμί and|και cheese|τυρί.", "Η Άννα και η μητέρα της τρώνε ψωμί και τυρί."],
+    ["They|Αυτές drink|πίνουν water|νερό too|επίσης.", "Πίνουν και νερό."],
+    ["After|Έπειτα they|αυτές wash|πλένουν the|τα plates|πιάτα.", "Έπειτα πλένουν τα πιάτα."],
+    ["The|Το food|φαγητό is|είναι very|πολύ good|καλό.", "Το φαγητό είναι πολύ καλό."],
+    ["Anna|Άννα is|είναι happy|χαρούμενη.", "Η Άννα είναι χαρούμενη."]
+  ]},
+  { tier:"A1", badge:"a1", title:"A Day at School", short:"School", s:[
+    ["Anna|Άννα is|είναι at|στο school|σχολείο.", "Η Άννα είναι στο σχολείο."],
+    ["The|Η teacher|δασκάλα is|είναι nice|καλή.", "Η δασκάλα είναι καλή."],
+    ["The|Η teacher|δασκάλα has|έχει many|πολλά books|βιβλία.", "Η δασκάλα έχει πολλά βιβλία."],
+    ["Anna|Άννα writes|γράφει with|με a|ένα pen|στυλό.", "Η Άννα γράφει με ένα στυλό."],
+    ["She|Αυτή writes|γράφει new|καινούργιες words|λέξεις.", "Γράφει καινούργιες λέξεις."],
+    ["The|Τα children|παιδιά learn|μαθαίνουν Greek|ελληνικά.", "Τα παιδιά μαθαίνουν ελληνικά."],
+    ["Anna|Άννα learns|μαθαίνει fast|γρήγορα.", "Η Άννα μαθαίνει γρήγορα."],
+    ["The|Η teacher|δασκάλα counts|μετράει the|τα children|παιδιά.", "Η δασκάλα μετράει τα παιδιά."],
+    ["One|Ένα two|δύο three|τρία four|τέσσερα.", "Ένα, δύο, τρία, τέσσερα."],
+    ["Anna|Άννα draws|ζωγραφίζει a|ένα house|σπίτι and|και a|έναν sun|ήλιο.", "Η Άννα ζωγραφίζει ένα σπίτι και έναν ήλιο."],
+    ["The|Τα children|παιδιά sing|τραγουδούν a|ένα song|τραγούδι.", "Τα παιδιά τραγουδούν ένα τραγούδι."],
+    ["They|Αυτά listen|ακούν to|σε the|τη teacher|δασκάλα.", "Ακούν τη δασκάλα."],
+    ["The|Η day|μέρα at|στο school|σχολείο is|είναι good|καλή.", "Η μέρα στο σχολείο είναι καλή."],
+    ["Anna|Άννα is|είναι a|ένα good|καλό child|παιδί.", "Η Άννα είναι ένα καλό παιδί."]
+  ]},
+  /* ===================== A2 · Elementary ===================== */
+  { tier:"A2", badge:"a2", title:"Maria by the Sea", short:"The Sea", s:[
+    ["Last|Το_περασμένο summer|καλοκαίρι Maria|Μαρία traveled|ταξίδεψε to|σε a|μια small|μικρή town|πόλη by|δίπλα the|στη sea|θάλασσα.", "Το περασμένο καλοκαίρι η Μαρία ταξίδεψε σε μια μικρή πόλη δίπλα στη θάλασσα."],
+    ["She|Αυτή was|ήταν excited|ενθουσιασμένη because|επειδή it|αυτό was|ήταν her|το first|πρώτο trip|ταξίδι alone|μόνη.", "Ήταν ενθουσιασμένη, επειδή ήταν το πρώτο της ταξίδι μόνη."],
+    ["She|Αυτή bought|αγόρασε a|ένα ticket|εισιτήριο and|και took|πήρε the|το morning|πρωινό train|τρένο.", "Αγόρασε ένα εισιτήριο και πήρε το πρωινό τρένο."],
+    ["The|Το journey|ταξίδι was|ήταν long|μεγάλο but|αλλά the|ο weather|καιρός was|ήταν warm|ζεστός.", "Το ταξίδι ήταν μεγάλο, αλλά ο καιρός ήταν ζεστός."],
+    ["When|Όταν she|αυτή arrived|έφτασε she|αυτή found|βρήκε a|ένα quiet|ήσυχο hotel|ξενοδοχείο near|κοντά the|στην beach|παραλία.", "Όταν έφτασε, βρήκε ένα ήσυχο ξενοδοχείο κοντά στην παραλία."],
+    ["The|Το room|δωμάτιο was|ήταν clean|καθαρό and|και bright|φωτεινό.", "Το δωμάτιο ήταν καθαρό και φωτεινό."],
+    ["From|Από the|το window|παράθυρο she|αυτή could|μπορούσε see|να_δει the|τη blue|γαλάζια sea|θάλασσα.", "Από το παράθυρο μπορούσε να δει τη γαλάζια θάλασσα."],
+    ["Every|Κάθε morning|πρωί Maria|Μαρία swam|κολυμπούσε in|σε the|το clear|καθαρό water|νερό.", "Κάθε πρωί η Μαρία κολυμπούσε στο καθαρό νερό."],
+    ["Then|Μετά she|αυτή ate|έτρωγε breakfast|πρωινό at|σε a|ένα small|μικρό café|καφέ.", "Μετά έτρωγε πρωινό σε ένα μικρό καφέ."],
+    ["The|Ο coffee|καφές was|ήταν strong|δυνατός and|και the|το bread|ψωμί was|ήταν fresh|φρέσκο.", "Ο καφές ήταν δυνατός και το ψωμί ήταν φρέσκο."],
+    ["In_the|Το afternoon|απόγευμα she|αυτή walked|περπατούσε through|μέσα_από the|τους old|παλιούς streets|δρόμους.", "Το απόγευμα περπατούσε μέσα από τους παλιούς δρόμους."],
+    ["She|Αυτή visited|επισκεπτόταν a|μια busy|πολυσύχναστη market|αγορά.", "Επισκεπτόταν μια πολυσύχναστη αγορά."],
+    ["She|Αυτή bought|αγόρασε fruit|φρούτα cheese|τυρί and|και a|ένα hat|καπέλο.", "Αγόρασε φρούτα, τυρί και ένα καπέλο."],
+    ["One|Ένα evening|βράδυ she|αυτή watched|κοίταξε the|το sunset|ηλιοβασίλεμα from|από the|τον hill|λόφο.", "Ένα βράδυ κοίταξε το ηλιοβασίλεμα από τον λόφο."],
+    ["The|Ο sky|ουρανός turned|έγινε red|κόκκινος and|και gold|χρυσός.", "Ο ουρανός έγινε κόκκινος και χρυσός."],
+    ["After|Μετά a|μία week|εβδομάδα Maria|Μαρία was|ήταν tired|κουρασμένη but|αλλά glad|ευχαριστημένη.", "Μετά από μία εβδομάδα η Μαρία ήταν κουρασμένη αλλά ευχαριστημένη."],
+    ["The|Το last|τελευταίο morning|πρωί she|αυτή said|είπε goodbye|αντίο to_the|στη sea|θάλασσα and|και smiled|χαμογέλασε.", "Το τελευταίο πρωί είπε αντίο στη θάλασσα και χαμογέλασε."]
+  ]},
+  { tier:"A2", badge:"a2", title:"A Trip to the Mountains", short:"Mountains", s:[
+    ["Last|Το_περασμένο weekend|σαββατοκύριακο three|τρεις friends|φίλοι went|πήγαν to_the|στα mountains|βουνά.", "Το περασμένο σαββατοκύριακο τρεις φίλοι πήγαν στα βουνά."],
+    ["The|Το morning|πρωί was|ήταν cold|κρύο and|και clear|καθαρό.", "Το πρωί ήταν κρύο και καθαρό."],
+    ["They|Αυτοί carried|κουβαλούσαν heavy|βαριά backpacks|σακίδια.", "Κουβαλούσαν βαριά σακίδια."],
+    ["They|Αυτοί climbed|ανέβηκαν a|ένα steep|απότομο path|μονοπάτι.", "Ανέβηκαν ένα απότομο μονοπάτι."],
+    ["In_the|Στο forest|δάσος they|αυτοί saw|είδαν tall|ψηλά trees|δέντρα.", "Στο δάσος είδαν ψηλά δέντρα."],
+    ["A|Ένα small|μικρό river|ποτάμι ran|έτρεχε near|κοντά the|στο path|μονοπάτι.", "Ένα μικρό ποτάμι έτρεχε κοντά στο μονοπάτι."],
+    ["They|Αυτοί drank|ήπιαν cold|κρύο water|νερό from|από the|το river|ποτάμι.", "Ήπιαν κρύο νερό από το ποτάμι."],
+    ["At_night|Το_βράδυ they|αυτοί put_up|έστησαν a|μια tent|σκηνή.", "Το βράδυ έστησαν μια σκηνή."],
+    ["They|Αυτοί lit|άναψαν a|μια fire|φωτιά and|και cooked|μαγείρεψαν food|φαγητό.", "Άναψαν μια φωτιά και μαγείρεψαν φαγητό."],
+    ["The|Το food|φαγητό was|ήταν simple|απλό but|αλλά tasty|νόστιμο.", "Το φαγητό ήταν απλό αλλά νόστιμο."],
+    ["The|Ο sky|ουρανός was|ήταν full|γεμάτος of|με stars|αστέρια.", "Ο ουρανός ήταν γεμάτος αστέρια."],
+    ["They|Αυτοί were|ήταν tired|κουρασμένοι but|αλλά happy|χαρούμενοι.", "Ήταν κουρασμένοι αλλά χαρούμενοι."],
+    ["In_the|Το morning|πρωί they|αυτοί walked|περπάτησαν back|πίσω.", "Το πρωί περπάτησαν πίσω."],
+    ["It|Αυτό was|ήταν a|ένα wonderful|υπέροχο trip|ταξίδι.", "Ήταν ένα υπέροχο ταξίδι."]
+  ]},
+  { tier:"A2", badge:"a2", title:"The New Job in the City", short:"The Job", s:[
+    ["Last|Τον_περασμένο month|μήνα Nikos|Νίκος started|ξεκίνησε a|μια new|καινούργια job|δουλειά.", "Τον περασμένο μήνα ο Νίκος ξεκίνησε μια καινούργια δουλειά."],
+    ["He|Αυτός works|δουλεύει in|σε a|ένα big|μεγάλο office|γραφείο.", "Δουλεύει σε ένα μεγάλο γραφείο."],
+    ["The|Το office|γραφείο is|είναι in|σε a|ένα tall|ψηλό building|κτίριο.", "Το γραφείο είναι σε ένα ψηλό κτίριο."],
+    ["Every|Κάθε morning|πρωί he|αυτός takes|παίρνει the|το bus|λεωφορείο to_the|στην city|πόλη.", "Κάθε πρωί παίρνει το λεωφορείο για την πόλη."],
+    ["He|Αυτός has|έχει a|έναν new|καινούργιο computer|υπολογιστή.", "Έχει έναν καινούργιο υπολογιστή."],
+    ["He|Αυτός writes|γράφει many|πολλά emails|μέιλ every|κάθε day|μέρα.", "Γράφει πολλά μέιλ κάθε μέρα."],
+    ["His|Οι colleagues|συνάδελφοι are|είναι friendly|φιλικοί.", "Οι συνάδελφοί του είναι φιλικοί."],
+    ["Yesterday|Χθες he|αυτός had|είχε an|μια important|σημαντική meeting|συνάντηση.", "Χθες είχε μια σημαντική συνάντηση."],
+    ["In_the|Στη meeting|συνάντηση he|αυτός spoke|μίλησε about|για a|ένα new|νέο plan|σχέδιο.", "Στη συνάντηση μίλησε για ένα νέο σχέδιο."],
+    ["His|Το boss|αφεντικό was|ήταν happy|ευχαριστημένο.", "Το αφεντικό του ήταν ευχαριστημένο."],
+    ["Nikos|Νίκος works|δουλεύει hard|σκληρά and|και earns|κερδίζει good|καλά money|λεφτά.", "Ο Νίκος δουλεύει σκληρά και κερδίζει καλά λεφτά."],
+    ["Sometimes|Μερικές_φορές the|η work|δουλειά is|είναι very|πολύ demanding|απαιτητική.", "Μερικές φορές η δουλειά είναι πολύ απαιτητική."],
+    ["But_he|Αλλά likes|του_αρέσει the|η new|καινούργια job|δουλειά.", "Αλλά του αρέσει η καινούργια δουλειά."],
+    ["In_the|Το evening|βράδυ he|αυτός goes|πάει home|σπίτι tired|κουρασμένος but|αλλά glad|ευχαριστημένος.", "Το βράδυ πάει σπίτι κουρασμένος αλλά ευχαριστημένος."]
+  ]},
+  /* ===================== C1 · Advanced ===================== */
+  { tier:"C1", badge:"c1", title:"The Lighthouse Keeper", short:"Lighthouse", s:[
+    ["Despite|Παρά the|την relentless|αδυσώπητη storm|καταιγίδα the|ο old|ηλικιωμένος keeper|φύλακας remained|παρέμεινε remarkably|αξιοσημείωτα composed|ψύχραιμος.", "Παρά την αδυσώπητη καταιγίδα, ο ηλικιωμένος φύλακας παρέμεινε αξιοσημείωτα ψύχραιμος."],
+    ["For|Επί decades|δεκαετίες he|αυτός had|είχε endured|αντέξει the|την ocean's|του_ωκεανού temperament|ιδιοσυγκρασία.", "Επί δεκαετίες είχε αντέξει την ιδιοσυγκρασία του ωκεανού."],
+    ["Its|Η ferocity|αγριότητα did_not|δεν unsettle|τάραζε him|τον anymore|πια.", "Η αγριότητά του δεν τον τάραζε πια."],
+    ["Each|Κάθε tempest|θύελλα was|ήταν merely|απλώς another|ένα_ακόμη chapter|κεφάλαιο in|σε an|μια enduring|διαρκή negotiation|διαπραγμάτευση.", "Κάθε θύελλα ήταν απλώς ένα ακόμη κεφάλαιο σε μια διαρκή διαπραγμάτευση."],
+    ["He|Αυτός understood|κατάλαβε that|ότι resilience|η_ανθεκτικότητα was|ήταν not|δεν the|η absence|απουσία of|του fear|φόβου.", "Κατάλαβε ότι η ανθεκτικότητα δεν ήταν η απουσία του φόβου."],
+    ["It|Αυτό was|ήταν the|η deliberate|σκόπιμη refusal|άρνηση to|να surrender|παραδοθεί.", "Ήταν η σκόπιμη άρνηση να παραδοθεί."],
+    ["Fear|Ο_φόβος, he|αυτός believed|πίστευε, was|ήταν an|ένας indispensable|απαραίτητος companion|σύντροφος.", "Ο φόβος, πίστευε, ήταν ένας απαραίτητος σύντροφος."],
+    ["As|Καθώς dawn|η_αυγή approached|πλησίαζε the|η storm|καταιγίδα gradually|σταδιακά subsided|κόπασε.", "Καθώς η αυγή πλησίαζε, η καταιγίδα σταδιακά κόπασε."],
+    ["The|Τα waves|κύματα, once|κάποτε ferocious|άγρια, now|τώρα lapped|χάιδευαν the|τους rocks|βράχους gently|απαλά.", "Τα κύματα, κάποτε άγρια, τώρα χάιδευαν απαλά τους βράχους."],
+    ["He|Αυτός gazed|ατένισε at|σε the|τον horizon|ορίζοντα with|με quiet|ήσυχη satisfaction|ικανοποίηση.", "Ατένισε τον ορίζοντα με ήσυχη ικανοποίηση."],
+    ["Solitude|Η_μοναχικότητα, he|αυτός had|είχε learned|μάθει, was|ήταν not|δεν loneliness|μοναξιά.", "Η μοναχικότητα, είχε μάθει, δεν ήταν μοναξιά."],
+    ["He|Αυτός lit|άναψε his|την pipe|πίπα and|και contemplated|στοχάστηκε his|τη mortality|θνητότητα.", "Άναψε την πίπα του και στοχάστηκε τη θνητότητά του."],
+    ["Death|Ο_θάνατος, he|αυτός mused|συλλογίστηκε, was|ήταν neither|ούτε tragedy|τραγωδία nor|ούτε triumph|θρίαμβος.", "Ο θάνατος, συλλογίστηκε, δεν ήταν ούτε τραγωδία ούτε θρίαμβος."],
+    ["It|Αυτό was|ήταν simply|απλώς the|η final|τελική punctuation|στίξη of_a|μιας life|ζωής fully|σχολαστικά lived|βιωμένης.", "Ήταν απλώς η τελική στίξη μιας ζωής, σχολαστικά βιωμένης."]
+  ]},
+  { tier:"C1", badge:"c1", title:"The Art Forger", short:"The Forger", s:[
+    ["The|Ο skilled|επιδέξιος forger|πλαστογράφος had|είχε deceived|εξαπατήσει every|κάθε expert|ειδικό.", "Ο επιδέξιος πλαστογράφος είχε εξαπατήσει κάθε ειδικό."],
+    ["For|Επί years|χρόνια he|αυτός had|είχε painted|ζωγραφίσει flawless|άψογα copies|αντίγραφα.", "Επί χρόνια είχε ζωγραφίσει άψογα αντίγραφα."],
+    ["Each|Κάθε brushstroke|πινελιά imitated|μιμούνταν the|το master's|του_δασκάλου style|στιλ.", "Κάθε πινελιά μιμούνταν το στιλ του δασκάλου."],
+    ["The|Το museum|μουσείο proudly|περήφανα displayed|εξέθετε his|τις forgeries|πλαστογραφίες.", "Το μουσείο εξέθετε περήφανα τις πλαστογραφίες του."],
+    ["No_one|Κανείς suspected|υποψιαζόταν the|την truth|αλήθεια.", "Κανείς δεν υποψιαζόταν την αλήθεια."],
+    ["But|Όμως one|μια day|μέρα a|ένας young|νεαρός expert|ειδικός noticed|παρατήρησε something|κάτι strange|παράξενο.", "Όμως μια μέρα ένας νεαρός ειδικός παρατήρησε κάτι παράξενο."],
+    ["She|Αυτή examined|εξέτασε the|τον canvas|καμβά with|με great|μεγάλη care|προσοχή.", "Εξέτασε τον καμβά με μεγάλη προσοχή."],
+    ["The|Τα colours|χρώματα were|ήταν too|πολύ bright|φωτεινά for|για an|έναν old|παλιό painting|πίνακα.", "Τα χρώματα ήταν πολύ φωτεινά για έναν παλιό πίνακα."],
+    ["Her|Η suspicion|υποψία grew|μεγάλωνε with|με every|κάθε detail|λεπτομέρεια.", "Η υποψία της μεγάλωνε με κάθε λεπτομέρεια."],
+    ["Finally|Τελικά the|ο forger|πλαστογράφος confessed|ομολόγησε his|το crime|έγκλημα.", "Τελικά ο πλαστογράφος ομολόγησε το έγκλημά του."],
+    ["He|Αυτός had|είχε fooled|ξεγελάσει the|τον world|κόσμο but|αλλά not|όχι her|αυτήν.", "Είχε ξεγελάσει τον κόσμο, αλλά όχι αυτήν."],
+    ["His|Το talent|ταλέντο was|ήταν real|αληθινό even_if|ακόμη_κι_αν his|τα paintings|έργα were|ήταν false|ψεύτικα.", "Το ταλέντο του ήταν αληθινό, ακόμη κι αν τα έργα του ήταν ψεύτικα."]
+  ]},
+  { tier:"C1", badge:"c1", title:"The Mountaineer's Resolve", short:"Mountaineer", s:[
+    ["The|Ο determined|αποφασισμένος mountaineer|ορειβάτης approached|πλησίαζε the|την frozen|παγωμένη summit|κορυφή.", "Ο αποφασισμένος ορειβάτης πλησίαζε την παγωμένη κορυφή."],
+    ["At_such|Σε_τέτοιο high|μεγάλο altitude|υψόμετρο the|ο air|αέρας was|ήταν dangerously|επικίνδυνα thin|αραιός.", "Σε τέτοιο μεγάλο υψόμετρο, ο αέρας ήταν επικίνδυνα αραιός."],
+    ["A|Μια violent|βίαιη blizzard|χιονοθύελλα battered|χτυπούσε the|την slope|πλαγιά.", "Μια βίαιη χιονοθύελλα χτυπούσε την πλαγιά."],
+    ["His|Τα fingers|δάχτυλα ached|πονούσαν from_the|από_το cold|κρύο.", "Τα δάχτυλά του πονούσαν από το κρύο."],
+    ["He|Αυτός feared|φοβόταν frostbite|τα_κρυοπαγήματα but|αλλά refused|αρνήθηκε to|να stop|σταματήσει.", "Φοβόταν τα κρυοπαγήματα, αλλά αρνήθηκε να σταματήσει."],
+    ["Only|Μόνο sheer|η_απόλυτη perseverance|επιμονή kept|κρατούσε him|τον moving|σε_κίνηση.", "Μόνο η απόλυτη επιμονή τον κρατούσε σε κίνηση."],
+    ["Each|Κάθε step|βήμα demanded|απαιτούσε enormous|τεράστια effort|προσπάθεια.", "Κάθε βήμα απαιτούσε τεράστια προσπάθεια."],
+    ["Finally|Τελικά he|αυτός conquered|κατέκτησε the|την peak|κορυφή.", "Τελικά κατέκτησε την κορυφή."],
+    ["For|Για a|μια brief|σύντομη moment|στιγμή he|αυτός felt|ένιωσε pure|καθαρή victory|νίκη.", "Για μια σύντομη στιγμή ένιωσε καθαρή νίκη."],
+    ["But|Όμως the|η descent|κατάβαση was|ήταν even|ακόμη more|πιο treacherous|ύπουλη.", "Όμως η κατάβαση ήταν ακόμη πιο ύπουλη."],
+    ["Exhausted|Εξαντλημένος he|αυτός descended|κατέβηκε slowly|αργά through|μέσα_από the|την storm|καταιγίδα.", "Εξαντλημένος, κατέβηκε αργά μέσα από την καταιγίδα."],
+    ["He|Αυτός had|είχε survived|επιβιώσει and|και that|αυτό was|ήταν enough|αρκετό.", "Είχε επιβιώσει, και αυτό ήταν αρκετό."]
+  ]},
+  /* ===================== A1 · added batch ===================== */
+  { tier:"A1", badge:"a1", title:"The Cat and the Garden", short:"The Garden", s:[
+    ["Anna|Άννα has|έχει a|έναν small|μικρό garden|κήπο.", "Η Άννα έχει έναν μικρό κήπο."],
+    ["In_the|Στον garden|κήπο there_is|υπάρχει a|ένα big|μεγάλο tree|δέντρο.", "Στον κήπο υπάρχει ένα μεγάλο δέντρο."],
+    ["The|Η cat|γάτα sits|κάθεται under|κάτω_από the|το tree|δέντρο.", "Η γάτα κάθεται κάτω από το δέντρο."],
+    ["A|Ένα small|μικρό bird|πουλί sings|τραγουδάει in_the|στο tree|δέντρο.", "Ένα μικρό πουλί τραγουδάει στο δέντρο."],
+    ["The|Η cat|γάτα sees|βλέπει the|το bird|πουλί.", "Η γάτα βλέπει το πουλί."],
+    ["The|Το bird|πουλί flies|πετάει away|μακριά.", "Το πουλί πετάει μακριά."],
+    ["The|Ο sun|ήλιος is|είναι warm|ζεστός.", "Ο ήλιος είναι ζεστός."],
+    ["The|Η cat|γάτα sleeps|κοιμάται in_the|στον sun|ήλιο.", "Η γάτα κοιμάται στον ήλιο."]
+  ]},
+  { tier:"A1", badge:"a1", title:"My Family", short:"Family", s:[
+    ["I|Εγώ have|έχω a|μια family|οικογένεια.", "Έχω μια οικογένεια."],
+    ["My|Η mother|μητέρα is|είναι kind|ευγενική.", "Η μητέρα μου είναι ευγενική."],
+    ["My|Ο father|πατέρας is|είναι tall|ψηλός.", "Ο πατέρας μου είναι ψηλός."],
+    ["I|Εγώ have|έχω one|έναν brother|αδελφό.", "Έχω έναν αδελφό."],
+    ["My|Ο brother|αδελφός is|είναι small|μικρός.", "Ο αδελφός μου είναι μικρός."],
+    ["We|Εμείς live|μένουμε in|σε a|ένα house|σπίτι.", "Μένουμε σε ένα σπίτι."],
+    ["Every|Κάθε evening|βράδυ we|εμείς eat|τρώμε together|μαζί.", "Κάθε βράδυ τρώμε μαζί."],
+    ["I|Εγώ love|αγαπώ my|την family|οικογένεια.", "Αγαπώ την οικογένειά μου."]
+  ]},
+  { tier:"A1", badge:"a1", title:"At the Bakery", short:"Bakery", s:[
+    ["Every|Κάθε morning|πρωί Anna|Άννα goes|πάει to_the|στον bakery|φούρνο.", "Κάθε πρωί η Άννα πάει στον φούρνο."],
+    ["The|Ο bakery|φούρνος is|είναι near|κοντά the|στο house|σπίτι.", "Ο φούρνος είναι κοντά στο σπίτι."],
+    ["A|Μια woman|γυναίκα works|δουλεύει there|εκεί.", "Μια γυναίκα δουλεύει εκεί."],
+    ["Anna|Άννα buys|αγοράζει fresh|φρέσκο bread|ψωμί.", "Η Άννα αγοράζει φρέσκο ψωμί."],
+    ["The|Το bread|ψωμί is|είναι warm|ζεστό.", "Το ψωμί είναι ζεστό."],
+    ["Anna|Άννα also|επίσης drinks|πίνει a|έναν coffee|καφέ.", "Η Άννα πίνει επίσης έναν καφέ."],
+    ["The|Ο coffee|καφές is|είναι very|πολύ good|καλός.", "Ο καφές είναι πολύ καλός."],
+    ["Anna|Άννα eats|τρώει and|και is|είναι happy|χαρούμενη.", "Η Άννα τρώει και είναι χαρούμενη."]
+  ]},
+  { tier:"A1", badge:"a1", title:"A Rainy Day", short:"Rain", s:[
+    ["Today|Σήμερα the|ο sky|ουρανός is|είναι grey|γκρι.", "Σήμερα ο ουρανός είναι γκρι."],
+    ["It_rains|Βρέχει and|και the|η day|μέρα is|είναι cold|κρύα.", "Βρέχει και η μέρα είναι κρύα."],
+    ["Anna|Άννα is|είναι at_home|στο_σπίτι.", "Η Άννα είναι στο σπίτι."],
+    ["She|Αυτή reads|διαβάζει a|ένα book|βιβλίο.", "Αυτή διαβάζει ένα βιβλίο."],
+    ["She|Αυτή drinks|πίνει a|ένα hot|ζεστό tea|τσάι.", "Αυτή πίνει ένα ζεστό τσάι."],
+    ["The|Η cat|γάτα sleeps|κοιμάται on_the|στον sofa|καναπέ.", "Η γάτα κοιμάται στον καναπέ."],
+    ["Outside|Έξω the|η rain|βροχή is|είναι cold|κρύα.", "Έξω η βροχή είναι κρύα."],
+    ["But|Αλλά the|το house|σπίτι is|είναι warm|ζεστό.", "Αλλά το σπίτι είναι ζεστό."]
+  ]},
+  /*__SEND__*/
+];
+STORIES.forEach(compile);
+
+/* ---- navigation: 3 tier tabs + a story-picker row of chips ---- */
+const tierIdx=[[0,1,2,9,10,11,12],[3,4,5],[6,7,8]];
+let activeTier=0; const pick=[0,0,0];
+const levels=new Array(STORIES.length).fill(0);
+function ai(){return tierIdx[activeTier][pick[activeTier]];}
+
+function closeDrawers(){
+  $("natural").hidden=true; $("natbtn").textContent="Show natural Greek";
+  $("exportbox").hidden=true; $("expbtn").textContent="Export every iteration";
+}
+
+function renderChips(){
+  const c=$("chips"); c.innerHTML="";
+  tierIdx[activeTier].forEach((sidx,i)=>{
+    const b=document.createElement("button");
+    b.className="chip"+(i===pick[activeTier]?" on":"");
+    b.textContent=(i+1)+". "+STORIES[sidx].short;
+    b.addEventListener("click",()=>{pick[activeTier]=i; closeDrawers(); renderChips(); render();});
+    c.appendChild(b);
+  });
+}
+
+/* Split a fully-translated (idiomatic) sentence into per-word spans so every
+   word in a snapped sentence is hoverable / clickable, just like the
+   word-by-word tokens. Each word becomes a .w.gr span (NOT .nat, so wireTips
+   picks it up); punctuation is emitted as plain text, not a hover target. */
+const _LP="«\u201C\u2018(\"'", _TP=".,;:!?·»\u201D\u2019)\"'";
+function natSpans(str,bloom){
+  const frag=document.createDocumentFragment(); let first=true;
+  str.split(/\s+/).forEach(piece=>{
+    if(!piece)return;
+    if(!first)frag.appendChild(document.createTextNode(" ")); first=false;
+    let a=0,b=piece.length;
+    while(a<b && _LP.indexOf(piece[a])>=0)a++;
+    while(b>a && _TP.indexOf(piece[b-1])>=0)b--;
+    const lead=piece.slice(0,a), core=piece.slice(a,b), trail=piece.slice(b);
+    if(lead)frag.appendChild(document.createTextNode(lead));
+    if(core){
+      const sp=document.createElement("span");
+      sp.className="w gr"+(look(core)?" hasg":"")+(bloom?" just":"");
+      sp.textContent=core; frag.appendChild(sp);
+    }
+    if(trail)frag.appendChild(document.createTextNode(trail));
+  });
+  return frag;
+}
+
+function render(){
+  const i=ai(), s=STORIES[i], N=s._N, lvl=levels[i];
+  const box=$("story"); box.innerHTML=""; let started=false, greekTokens=0;
+  s._sents.forEach(sent=>{
+    const full = sent.nat && sent.maxGi>0 && lvl>=sent.maxGi;
+    if(full){
+      greekTokens+=sent.transCount;
+      if(started)box.appendChild(document.createTextNode(" "));
+      const wrap=document.createElement("span");
+      wrap.className="snap";
+      wrap.appendChild(natSpans(sent.nat, lvl===sent.maxGi));
+      box.appendChild(wrap); started=true;
+    } else {
+      sent.toks.forEach(tok=>{
+        if(tok.p){const sp=document.createElement("span");sp.className="punct";sp.textContent=tok.t;box.appendChild(sp);started=true;return;}
+        const greek=tok._gi<=lvl; if(greek)greekTokens++;
+        if(started)box.appendChild(document.createTextNode(" "));
+        const sp=document.createElement("span");
+        sp.className="w"+(greek?" gr":"")+(tok._gi===lvl?" just":"");
+        sp.textContent=greek?tok.g:tok.t;
+        if(greek && look(tok.g)) sp.className+=" hasg";
+        box.appendChild(sp); started=true;
+      });
+    }
+  });
+  $("badge").className="badge "+s.badge; $("badge").textContent=s.tier;
+  $("title").textContent=s.title;
+  const pct=s._total?Math.round(greekTokens/s._total*100):0;
+  $("meta").innerHTML=s._total+" words &middot; <b>"+N+"</b> unique";
+  let c;
+  if(lvl===0)c="<b>0</b> / "+N+" distinct words &middot; 0% Greek";
+  else if(lvl>=N)c='<span class="done">'+N+" / "+N+" &middot; fully Greek &#10003;</span>";
+  else c="<b>"+lvl+"</b> / "+N+" distinct words &middot; <b>"+pct+"%</b> Greek";
+  $("count").innerHTML=c;
+  $("barfill").style.width=pct+"%";
+  const sl=$("slider"); sl.max=N; sl.value=lvl;
+  $("prev").disabled=lvl<=0; $("next").disabled=lvl>=N;
+  $("naturaltext").textContent=s._sents.map(x=>x.nat).join(" ");
+}
+
+function plain(lvl){
+  const s=STORIES[ai()]; let started=false,r="";
+  s._sents.forEach(sent=>{
+    const full=sent.nat&&sent.maxGi>0&&lvl>=sent.maxGi;
+    if(full){ if(started)r+=" "; r+=sent.nat; started=true; }
+    else sent.toks.forEach(tok=>{
+      if(tok.p){r+=tok.t;started=true;return;}
+      if(started)r+=" "; r+=(tok._gi<=lvl?tok.g:tok.t); started=true;
+    });
+  });
+  return r;
+}
+
+function buildExport(){
+  const s=STORIES[ai()], N=s._N; let out="";
+  out+="=== "+s.title+" ("+s.tier+") — "+(N+1)+" iterations, "+N+" distinct-word swaps ===\n\n";
+  for(let k=0;k<=N;k++){
+    const tag=k===0?"(fully English)":(k===N?"(fully Greek)":"");
+    out+="Iteration "+k+" / "+N+" "+tag+"\n"+plain(k)+"\n\n";
+  }
+  return out;
+}
+
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+    tab.classList.add("on");
+    activeTier=+tab.dataset.tier; closeDrawers(); renderChips(); render();
+  });
+});
+$("slider").addEventListener("input",e=>{levels[ai()]=+e.target.value;render();});
+$("next").addEventListener("click",()=>{const N=STORIES[ai()]._N;if(levels[ai()]<N){levels[ai()]++;render();}});
+$("prev").addEventListener("click",()=>{if(levels[ai()]>0){levels[ai()]--;render();}});
+$("all").addEventListener("click",()=>{levels[ai()]=STORIES[ai()]._N;render();});
+$("reset").addEventListener("click",()=>{levels[ai()]=0;render();});
+$("natbtn").addEventListener("click",()=>{const d=$("natural");d.hidden=!d.hidden;$("natbtn").textContent=d.hidden?"Show natural Greek":"Hide natural Greek";});
+$("expbtn").addEventListener("click",()=>{
+  const d=$("exportbox");
+  if(d.hidden){ $("exparea").value=buildExport(); $("iterlabel").textContent=STORIES[ai()].title; d.hidden=false; $("expbtn").textContent="Hide iterations"; }
+  else { d.hidden=true; $("expbtn").textContent="Export every iteration"; }
+});
+$("copybtn").addEventListener("click",()=>{
+  const ta=$("exparea"); ta.select();
+  if(navigator.clipboard){navigator.clipboard.writeText(ta.value).then(()=>{$("copybtn").textContent="Copied \u2713";setTimeout(()=>$("copybtn").textContent="Copy to clipboard",1400);}).catch(()=>{});}
+});
+$("dlbtn").addEventListener("click",()=>{
+  const blob=new Blob([$("exparea").value],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=STORIES[ai()].title.replace(/[^A-Za-z0-9]+/g,"_")+"_iterations.txt";a.click();URL.revokeObjectURL(a.href);
+});
+document.addEventListener("keydown",e=>{
+  if(e.target && e.target.tagName==="TEXTAREA")return;
+  if(e.key==="ArrowRight")$("next").click();
+  if(e.key==="ArrowLeft")$("prev").click();
+});
+
+$("foot").innerHTML="Each step turns one English word — and every repetition of it — into Greek; once a whole sentence is Greek it snaps into natural Greek syntax. Use \u2190 / \u2192 to step. Nine stories across three levels — pick a level, then a story.";
+
+renderChips(); render();
+</script>
+</body>
+</html>
